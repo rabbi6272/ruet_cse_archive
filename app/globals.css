@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+.morphic-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+.dropdown {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: all 0.5s ease;
+}
+.desktop-menu .nav-item button:hover {
+  transition-duration: 300ms;
+}
+.nav-item:hover .dropdown {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+/* .navbar {
+  font-family: Inter, sans-serif;
+} */
+/* .logo {
+  transition: transform 0.3s ease;
+}
+.logo:hover {
+  transform: scale(1.05);
+} */
