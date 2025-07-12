@@ -2,14 +2,6 @@
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
 
-::-webkit-scrollbar-track {
-  color: white;
-}
-::-webkit-scrollbar {
-  width: 10px;
-  color: #888;
-}
-
 .morphic-effect {
   background: rgba(255, 255, 255, 0.9);
   backdrop-filter: blur(10px);

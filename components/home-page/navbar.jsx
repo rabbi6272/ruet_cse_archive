@@ -5,7 +5,7 @@ import { MobileNavbarLinks } from "./mobile-navbar-links";
 import Link from "next/link";
 
 const myFont = localFont({
-  src: "./tt_trailer.ttf",
+  src: "../tt_trailer.ttf",
 });
 
 const inter = Inter({
