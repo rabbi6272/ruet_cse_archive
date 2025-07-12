@@ -10,6 +10,7 @@
     "postinstall": "flowbite-react patch"
   },
   "dependencies": {
+    "@splidejs/react-splide": "^0.7.12",
     "flowbite-react": "^0.11.8",
     "framer-motion": "^12.23.3",
     "next": "15.3.5",

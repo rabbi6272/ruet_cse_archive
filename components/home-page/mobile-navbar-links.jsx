@@ -46,7 +46,7 @@ const mobileNavItems = [
   },
 ];
 
-export function MobileNavbar() {
+export function MobileNavbarLinks() {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [isNavOpen, setIsNavOpen] = useState(false);
   const navRef = useRef();
@@ -87,7 +87,7 @@ export function MobileNavbar() {
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             ref={navRef}
-            className="fixed top-0 left-0 w-full  bg-white z-40 p-6 overflow-y-auto"
+            className="fixed top-0 left-0 w-full h-full bg-white z-40 p-6 overflow-y-auto"
           >
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-2xl font-semibold">Menu</h3>
@@ -95,6 +95,7 @@ export function MobileNavbar() {
                 <i className="fas fa-xmark text-gray-600 text-xl cursor-pointer "></i>
               </button>
             </div>
+
             <div className="flex flex-col space-y-2">
               {mobileNavItems.map((item, index) => (
                 <div key={item.label} className="nav-item relative py-1">
@@ -145,73 +146,3 @@ export function MobileNavbar() {
     </div>
   );
 }
-
-// "use client";
-
-// import {
-//   Drawer,
-//   DrawerHeader,
-//   DrawerItems,
-//   Sidebar,
-//   SidebarItem,
-//   SidebarItemGroup,
-//   SidebarItems,
-// } from "flowbite-react";
-// import { useState } from "react";
-
-// export function MobileNavbar() {
-//   const [isOpen, setIsOpen] = useState(false);
-
-//   const handleClose = () => setIsOpen(false);
-
-//   return (
-//     <div className="block lg:hidden">
-//       <div className="flex flex-col items-center justify-center">
-//         <button onClick={() => setIsOpen(!isOpen)}>
-//           <i className="fas fa-bars text-gray-800 text-2xl cursor-pointer p-3 rounded-lg hover:bg-gray-200 transition duration-500"></i>
-//         </button>
-//       </div>
-
-//       <Drawer open={isOpen} onClose={handleClose} backdrop={true} color="black">
-//         <DrawerHeader title="MENU" titleIcon={() => <></>} />
-//         <DrawerItems>
-//           <Sidebar
-//             aria-label="Sidebar with multi-level dropdown example"
-//             className="[&>div]:bg-transparent [&>div]:p-0"
-//           >
-//             <div className="flex h-full flex-col justify-between py-2">
-//               <div>
-//                 <SidebarItems>
-//                   <SidebarItemGroup>
-//                     <SidebarItem href="/">Dashboard</SidebarItem>
-//                     <SidebarItem href="/e-commerce/products">
-//                       Products
-//                     </SidebarItem>
-//                     <SidebarItem href="/users/list">Users list</SidebarItem>
-//                     <SidebarItem href="/authentication/sign-in">
-//                       Sign in
-//                     </SidebarItem>
-//                     <SidebarItem href="/authentication/sign-up">
-//                       Sign up
-//                     </SidebarItem>
-//                   </SidebarItemGroup>
-//                   <SidebarItemGroup>
-//                     <SidebarItem href="https://github.com/themesberg/flowbite-react/">
-//                       Docs
-//                     </SidebarItem>
-//                     <SidebarItem href="https://flowbite-react.com/">
-//                       Components
-//                     </SidebarItem>
-//                     <SidebarItem href="https://github.com/themesberg/flowbite-react/issues">
-//                       Help
-//                     </SidebarItem>
-//                   </SidebarItemGroup>
-//                 </SidebarItems>
-//               </div>
-//             </div>
-//           </Sidebar>
-//         </DrawerItems>
-//       </Drawer>
-//     </div>
-//   );
-// }
