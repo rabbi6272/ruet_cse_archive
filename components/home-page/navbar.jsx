@@ -1,4 +1,11 @@
 import { Inter } from "next/font/google";
+import localFont from "next/font/local";
+
+import { MobileNavbar } from "./mobile-navbar";
+
+const myFont = localFont({
+  src: "./tt_trailer.ttf",
+});
 
 const inter = Inter({
   variable: "--font-inter",
@@ -9,22 +16,20 @@ const inter = Inter({
 export function Navbar() {
   return (
     <nav
-      className={`${inter.variable} morphic-effect fixed top-0 w-full z-50 shadow-md`}
+      className={`${inter.variable} navbar morphic-effect fixed top-0 w-full z-50 shadow-md`}
     >
-      <div className="w-full mx-auto px-4 sm:px-6 lg:px-14">
-        <div className="flex items-center justify-between h-16">
-          {/* <!-- Logo --> */}
-          <div className="flex-shrink-0 flex items-center">
-            <div className="flex items-center">
-              <i className="fas fa-cube text-gray-800 text-2xl"></i>
-              <span className="ml-2 text-2xl font-bold text-gray-800">
-                CSE Archive
-              </span>
-            </div>
+      <div className="w-full mx-auto px-3 lg:px-14 flex items-center justify-between h-16">
+        {/* <!-- Logo --> */}
+        <div className="flex-shrink-0 flex items-center">
+          <div className="flex items-center">
+            <i className="fas fa-cube text-gray-800 text-2xl"></i>
+            <span className={`${myFont.className} ml-2 text-3xl text-gray-800`}>
+              CSE Archive
+            </span>
           </div>
-          <DesktopNavbar />
-          <MobileNavbar />
         </div>
+        <DesktopNavbar />
+        <MobileNavbar />
       </div>
     </nav>
   );
@@ -32,8 +37,8 @@ export function Navbar() {
 
 function DesktopNavbar() {
   return (
-    <div className={`${inter.variable} desktop-menu hidden md:block`}>
-      <div className="ml-10 flex items-baseline space-x-8">
+    <div className={`${inter.variable} desktop-menu hidden lg:block`}>
+      <div className=" flex items-baseline space-x-8">
         {/* <!-- Nav Item 1 --> */}
         <div className="nav-item relative">
           <button className="text-gray-700 hover:text-indigo-600 hover:bg-gray-200 px-3.5 py-2.5 rounded-md text-sm font-medium transition-all duration-500 flex items-center">
@@ -198,176 +203,183 @@ function DesktopNavbar() {
   );
 }
 
-function MobileNavbar() {
-  return (
-    <div className={`${inter.variable} morphic-effect md:hidden block`}>
-      <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        {/* <!-- Mobile Nav Item 1 --> */}
-        <div className="relative">
-          <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
-            Products
-            <i className="fas fa-chevron-down text-sm"></i>
-          </button>
-          <div className="mobile-dropdown hidden pl-4">
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Product 1
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Product 2
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Product 3
-            </a>
-          </div>
-        </div>
+// function MobileNavbar() {
+//   return (
+//     <div className={`${inter.variable} mobile-menu md:hidden block relative`}>
+//       <i
+//         className="fas fa-bars text-gray-800 text-2xl cursor-pointer p-3 rounded-lg hover:bg-gray-200 transition duration-500"
+//         onClick={() => setIsOpen(!isOpen)}
+//       ></i>
 
-        {/* <!-- Mobile Nav Item 2 --> */}
-        <div className="relative">
-          <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
-            Solutions
-            <i className="fas fa-chevron-down text-sm"></i>
-          </button>
-          <div className="mobile-dropdown hidden pl-4">
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Solution for Business
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Solution for Education
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Solution for Healthcare
-            </a>
-          </div>
-        </div>
+//       <div className={`${isOpen ? "block" : "hidden"} `}>
+//         <div className="w-full absolute top-0">
+//           {/* <!-- Mobile Nav Item 1 --> */}
+//           <div className="relative">
+//             <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
+//               Products
+//               <i className="fas fa-chevron-down text-sm"></i>
+//             </button>
+//             <div className="mobile-dropdown hidden pl-4">
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Product 1
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Product 2
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Product 3
+//               </a>
+//             </div>
+//           </div>
 
-        {/* <!-- Mobile Nav Item 3 --> */}
-        <div className="relative">
-          <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
-            Resources
-            <i className="fas fa-chevron-down text-sm"></i>
-          </button>
-          <div className="mobile-dropdown hidden pl-4">
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Documentation
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Tutorials
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              API Reference
-            </a>
-          </div>
-        </div>
+//           {/* <!-- Mobile Nav Item 2 --> */}
+//           <div className="relative">
+//             <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
+//               Solutions
+//               <i className="fas fa-chevron-down text-sm"></i>
+//             </button>
+//             <div className="mobile-dropdown hidden pl-4">
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Solution for Business
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Solution for Education
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Solution for Healthcare
+//               </a>
+//             </div>
+//           </div>
 
-        {/* <!-- Mobile Nav Item 4 --> */}
-        <div className="relative">
-          <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
-            Community
-            <i className="fas fa-chevron-down text-sm"></i>
-          </button>
-          <div className="mobile-dropdown hidden pl-4">
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            ></a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Pro
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Enterprise
-            </a>
-          </div>
-        </div>
+//           {/* <!-- Mobile Nav Item 3 --> */}
+//           <div className="relative">
+//             <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
+//               Resources
+//               <i className="fas fa-chevron-down text-sm"></i>
+//             </button>
+//             <div className="mobile-dropdown hidden pl-4">
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Documentation
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Tutorials
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 API Reference
+//               </a>
+//             </div>
+//           </div>
 
-        {/* <!-- Mobile Nav Item 5 --> */}
-        <div className="relative">
-          <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
-            Company
-            <i className="fas fa-chevron-down text-sm"></i>
-          </button>
-          <div className="mobile-dropdown hidden pl-4">
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              About Us
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Careers
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Contact
-            </a>
-          </div>
-        </div>
+//           {/* <!-- Mobile Nav Item 4 --> */}
+//           <div className="relative">
+//             <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
+//               Community
+//               <i className="fas fa-chevron-down text-sm"></i>
+//             </button>
+//             <div className="mobile-dropdown hidden pl-4">
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               ></a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Pro
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Enterprise
+//               </a>
+//             </div>
+//           </div>
 
-        {/* <!-- Mobile Nav Item 6 --> */}
-        <div className="relative">
-          <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
-            Support
-            <i className="fas fa-chevron-down text-sm"></i>
-          </button>
-          <div className="mobile-dropdown hidden pl-4">
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Help Center
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Community
-            </a>
-            <a
-              href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
-            >
-              Status
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
+//           {/* <!-- Mobile Nav Item 5 --> */}
+//           <div className="relative">
+//             <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
+//               Company
+//               <i className="fas fa-chevron-down text-sm"></i>
+//             </button>
+//             <div className="mobile-dropdown hidden pl-4">
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 About Us
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Careers
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Contact
+//               </a>
+//             </div>
+//           </div>
+
+//           {/* <!-- Mobile Nav Item 6 --> */}
+//           <div className="relative">
+//             <button className="mobile-dropdown-btn text-gray-700 hover:text-indigo-600 px-3 py-2 rounded-md text-base font-medium w-full text-left flex justify-between items-center">
+//               Support
+//               <i className="fas fa-chevron-down text-sm"></i>
+//             </button>
+//             <div className="mobile-dropdown hidden pl-4">
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Help Center
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Community
+//               </a>
+//               <a
+//                 href="#"
+//                 className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-indigo-600"
+//               >
+//                 Status
+//               </a>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// }
