@@ -14,6 +14,7 @@ export default function Home() {
           This is a demo of a responsive navbar with morphic design using
           Tailwind CSS.
         </p>
+        <br/>
       </div>
 
       
