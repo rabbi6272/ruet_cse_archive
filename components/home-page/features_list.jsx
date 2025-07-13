@@ -43,6 +43,7 @@ export function FeaturesList() {
         </div>
         <br/>
         <br/>
+         <div className="max-w-2xl mx-auto text-center">
 <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-dark md:text-5xl lg:text-6xl">
   <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
     Better Data
@@ -218,6 +219,7 @@ export function FeaturesList() {
     </div>
   </div>
 </div>
+             </div>
 
     <br/>
             <br/>
