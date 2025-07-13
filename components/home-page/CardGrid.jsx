@@ -1,5 +1,20 @@
 export function CardGrid() {
   return (
+    <>
+<div className="max-w-2xl mx-auto text-center">
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+        Regain{' '}
+        <mark className="px-2 text-white bg-blue-600 rounded-sm dark:bg-blue-500">
+          control
+        </mark>{' '}
+        over your days
+      </h1>
+      <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
+        Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
+      </p>
+    </div>
+      <br/>
+      
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6 p-6">
       {/* Card 1 */}
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
@@ -190,6 +205,6 @@ export function CardGrid() {
           </a>
         </div>
       </div>
-    </div>
+    </div></>
   );
 }
