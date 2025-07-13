@@ -22,8 +22,9 @@ export default function Home() {
       
       {/* Slideshow */}
       <Slideshow />
+      <br/><br/>
       {/*Card Grid*/}
-      <CardGrid/>
+      <CardGrid />
 
       {/* <!-- Main content --> */}
       <div className="w-full h-full flex flex-col mx-auto px-4 sm:px-6 lg:px-8">
