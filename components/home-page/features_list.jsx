@@ -36,6 +36,9 @@ export function FeaturesList() {
         <span>Free updates: <span className="font-semibold text-gray-900 dark:text-dark">6 months</span></span>
     </li>
 </ul>
+        <br/>
+        <br/>
+        <br/>
 
     
     </>);
