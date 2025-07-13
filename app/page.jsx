@@ -1,5 +1,5 @@
 import { Slideshow } from "@/components/home-page/slideshow";
-import { Slideshow } from "@/components/home-page/features_list";
+import { FeaturesList } from "@/components/home-page/features_list";
 export default function Home() {
   return (
     <div className="min-h-screen w-full">
