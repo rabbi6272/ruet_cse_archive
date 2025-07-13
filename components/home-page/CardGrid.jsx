@@ -82,4 +82,4 @@ const CardGrid = () => {
   );
 };
 
-export default CardGrid;
+export CardGrid;
