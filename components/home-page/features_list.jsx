@@ -217,8 +217,8 @@ export function FeaturesList() {
   </div>
 </div>
 
-    </br>
-            </br>
+    <br/>
+            <br/>
      
 
     
