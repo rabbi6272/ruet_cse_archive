@@ -2,7 +2,7 @@ export function CardGrid() {
   return (
     <>
 <div className="max-w-2xl mx-auto text-center">
-      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+      <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-dark">
         Regain{' '}
         <mark className="px-2 text-white bg-blue-600 rounded-sm dark:bg-blue-500">
           control
