@@ -19,7 +19,7 @@ export function CardGrid() {
       {/* Card 1 */}
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <a href="#">
-          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+          <img className="rounded-t-lg" src="/public/images/image0.jpg" alt="" />
         </a>
         <div className="p-5">
           <a href="#">
@@ -57,7 +57,7 @@ export function CardGrid() {
       {/* Card 2 */}
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <a href="#">
-          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+          <img className="rounded-t-lg" src="/public/images/image1.jpg" alt="" />
         </a>
         <div className="p-5">
           <a href="#">
@@ -95,7 +95,7 @@ export function CardGrid() {
       {/* Card 3 */}
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <a href="#">
-          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+          <img className="rounded-t-lg" src="/public/images/image2.jpg" alt="" />
         </a>
         <div className="p-5">
           <a href="#">
@@ -133,7 +133,7 @@ export function CardGrid() {
       {/* Card 4 */}
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <a href="#">
-          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+          <img className="rounded-t-lg" src="/public/images/image3.jpg" alt="" />
         </a>
         <div className="p-5">
           <a href="#">
@@ -171,7 +171,7 @@ export function CardGrid() {
       {/* Card 5 */}
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <a href="#">
-          <img className="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+          <img className="rounded-t-lg" src="/public/images/image4.jpg" alt="" />
         </a>
         <div className="p-5">
           <a href="#">
