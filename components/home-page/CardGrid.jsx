@@ -9,7 +9,7 @@ export function CardGrid() {
         <div className="p-5">
           <a href="#">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Noteworthy technology acquisitions 2021
+              1<sup>st</sup> Year Resources
             </h5>
           </a>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -47,7 +47,7 @@ export function CardGrid() {
         <div className="p-5">
           <a href="#">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Cloud computing trends
+              2<sup>nd</sup> Year Resources
             </h5>
           </a>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -85,7 +85,7 @@ export function CardGrid() {
         <div className="p-5">
           <a href="#">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              AI advancements in 2023
+              3<sup>rd</sup> Year Resources
             </h5>
           </a>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -123,7 +123,7 @@ export function CardGrid() {
         <div className="p-5">
           <a href="#">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              Cybersecurity best practices
+              4<sup>th</sup> Year Resources
             </h5>
           </a>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
@@ -161,7 +161,7 @@ export function CardGrid() {
         <div className="p-5">
           <a href="#">
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-              The future of remote work
+              Higer Studies & Internship Deatils
             </h5>
           </a>
           <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
