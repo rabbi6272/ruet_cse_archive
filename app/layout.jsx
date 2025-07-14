@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
       />
 
-      <body className={`${lato.variable} antialiased bg-gray-50`}>
+      <body className={`${lato.variable} antialiased bg-gray-200`}>
         <Navbar />
 
         {children}
