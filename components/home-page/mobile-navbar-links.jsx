@@ -76,7 +76,7 @@ export function MobileNavbarLinks() {
   return (
     <div className={`${inter.variable} block lg:hidden`}>
       <button ref={buttonRef} onClick={() => setIsNavOpen(!isNavOpen)}>
-        <i className="fas fa-bars text-gray-800 text-2xl cursor-pointer p-3 rounded-lg hover:bg-gray-200 transition duration-500"></i>
+        <i className="fas fa-bars text-gray-800 dark:text-gray-200 text-2xl cursor-pointer p-3 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-800 transition duration-500"></i>
       </button>
 
       <AnimatePresence>
@@ -87,12 +87,14 @@ export function MobileNavbarLinks() {
             exit={{ x: "100%" }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
             ref={navRef}
-            className="fixed top-0 left-0 w-full h-full bg-white z-40 p-6 overflow-y-auto"
+            className="fixed top-0 left-0 w-full h-full bg-white dark:bg-[#071a26] z-40 p-6 overflow-y-auto"
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-2xl font-semibold">Menu</h3>
+              <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
+                Menu
+              </h3>
               <button onClick={() => setIsNavOpen(!isNavOpen)}>
-                <i className="fas fa-xmark text-gray-600 text-xl cursor-pointer "></i>
+                <i className="fas fa-xmark text-gray-600 dark:text-gray-100 text-xl cursor-pointer "></i>
               </button>
             </div>
 
@@ -103,7 +105,7 @@ export function MobileNavbarLinks() {
                     <>
                       <button
                         onClick={() => toggleDropdown(index)}
-                        className="w-full text-left text-gray-700 hover:text-indigo-600 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium transition-all duration-500 flex items-center justify-between"
+                        className="w-full text-left text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-4 py-2 rounded-md text-sm font-medium transition-all duration-500 flex items-center justify-between"
                       >
                         {item.label}
                         <i className="fas fa-chevron-down ml-2 text-xs"></i>
@@ -120,7 +122,7 @@ export function MobileNavbarLinks() {
                               <Link
                                 key={sub.name}
                                 href={sub.href}
-                                className="block w-full px-4 py-2 rounded text-sm text-gray-700 hover:bg-gray-200 hover:text-indigo-600"
+                                className="block w-full px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
                               >
                                 {sub.name}
                               </Link>
@@ -132,7 +134,7 @@ export function MobileNavbarLinks() {
                   ) : (
                     <Link
                       href={item.href}
-                      className="block text-gray-700 hover:text-indigo-600 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium transition-all duration-500"
+                      className="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-4 py-2 rounded-md text-sm font-medium transition-all duration-500"
                     >
                       {item.label}
                     </Link>
