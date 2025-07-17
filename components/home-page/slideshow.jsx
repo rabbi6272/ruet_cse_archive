@@ -13,7 +13,7 @@ export function Slideshow() {
 
   return (
     <motion.div
-      className="w-full h-auto mb-8 lg:mb-10 "
+      className="w-full h-auto"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay: 0.3 }}
@@ -28,14 +28,14 @@ export function Slideshow() {
           pauseOnHover: false,
           speed: 800,
         }}
-        className="w-full lg:w-[70%] mx-auto h-full "
+        className="w-full mx-auto h-full "
       >
         {slides.map((src, index) => (
-          <SplideSlide key={index} className="h-full pb-8 lg:pb-0 ">
+          <SplideSlide key={index} className="h-full w-full pb-8  ">
             <img
               src={src}
               alt={`Slide ${index + 1}`}
-              className="w-full h-full object-cover"
+              className="w-full md:w-[80%] lg:w-[70%] h-full mx-auto"
             />
           </SplideSlide>
         ))}

@@ -10,12 +10,13 @@ const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const mobileNavItems = [
   {
     label: "Resources",
-    subItems: [
-      { name: "1st Year", href: "/resources/1st" },
-      { name: "2nd Year", href: "/resources/2nd" },
-      { name: "3rd Year", href: "/resources/3rd" },
-      { name: "4th Year", href: "/resources/4th" },
-    ],
+    href: "/resources",
+    // subItems: [
+    //   { name: "1st Year", href: "/resources/1st" },
+    //   { name: "2nd Year", href: "/resources/2nd" },
+    //   { name: "3rd Year", href: "/resources/3rd" },
+    //   { name: "4th Year", href: "/resources/4th" },
+    // ],
   },
   {
     label: "Book shelf",
@@ -116,12 +117,14 @@ export function MobileNavbarLinks() {
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: 10 }}
+                            transition={{ duration: 0.3 }}
                             className="pl-4"
                           >
                             {item.subItems.map((sub) => (
                               <Link
                                 key={sub.name}
                                 href={sub.href}
+                                onClick={() => setIsNavOpen(!isNavOpen)}
                                 className="block w-full px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
                               >
                                 {sub.name}
@@ -134,6 +137,7 @@ export function MobileNavbarLinks() {
                   ) : (
                     <Link
                       href={item.href}
+                      onClick={() => setIsNavOpen(!isNavOpen)}
                       className="block text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-4 py-2 rounded-md text-sm font-medium transition-all duration-500"
                     >
                       {item.label}

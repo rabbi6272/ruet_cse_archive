@@ -2,6 +2,11 @@
 @plugin "flowbite-react/plugin/tailwindcss";
 @source "../.flowbite-react/class-list.json";
 
+@theme {
+  --morphic-dark: #071a26;
+  --morphic-light: #ffffffe6;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -13,15 +18,9 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  /* border: 1px solid rgba(255, 255, 255, 0.18); */
 }
-.morphic-effect-2 {
-  background: rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-}
+
 .desktop-menu .nav-item button:hover {
   transition-duration: 500ms;
 }
