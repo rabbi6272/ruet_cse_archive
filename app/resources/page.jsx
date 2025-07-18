@@ -8,6 +8,7 @@ export default function Resources() {
       <br />
       <CardGrid />
       <br />
+      <br />
     </div>
   );
 }

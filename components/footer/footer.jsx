@@ -12,7 +12,7 @@ export function FooterComponent() {
   return (
     <footer
       data-testid="flowbite-footer"
-      className="morphic-effect bg-morphic-light bg-[#ffffffe6] dark:bg-[#071a26] rounded-lg shadow-sm md:flex md:items-center md:justify-between w-full p-6 lg:px-14 lg:py-6"
+      className="morphic-effect bg-morphic-light bg-[#ffffffe6] dark:bg-[#071a26] rounded-t-lg shadow-sm md:flex md:items-center md:justify-between w-full p-6 lg:px-14 lg:py-6"
     >
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
@@ -43,7 +43,7 @@ export function FooterComponent() {
                 </li>
                 <li className="me-4 last:mr-0 md:mr-6">
                   <Link href="#" className="hover:underline">
-                    RUET CSE (sec c)
+                    RUET CSE
                   </Link>
                 </li>
               </ul>
