@@ -133,9 +133,9 @@ function DesktopNavbarLinks() {
 
         {/* <!-- Nav Item 3 --> */}
         <div className="nav-item relative">
-          <button className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-3.5 py-2.5 rounded-md text-sm font-medium 5 flex items-center">
+          <Link href="/alumni" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-3.5 py-2.5 rounded-md text-sm font-medium 5 flex items-center">
             Code Library
-          </button>
+          </Link>
         </div>
 
         {/* <!-- Nav Item 4 --> */}
