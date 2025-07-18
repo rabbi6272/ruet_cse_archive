@@ -1,4 +1,4 @@
-"use client"; // Mark as client component
+"use client"; // Mark as client component.
 
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
