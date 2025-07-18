@@ -31,7 +31,7 @@ const mobileNavItems = [
     ],
   },
   { label: "Code Library", href: "/code" },
-  { label: "Global Ruet", href: "/global" },
+  { label: "Global Ruet", href: "/alumni" },
   { label: "Informations", href: "/info" },
   {
     label: "Contact & Help",
