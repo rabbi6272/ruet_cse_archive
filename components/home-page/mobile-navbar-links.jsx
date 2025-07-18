@@ -8,16 +8,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 const mobileNavItems = [
-  {
-    label: "Resources",
-    href: "/resources",
-    // subItems: [
-    //   { name: "1st Year", href: "/resources/1st" },
-    //   { name: "2nd Year", href: "/resources/2nd" },
-    //   { name: "3rd Year", href: "/resources/3rd" },
-    //   { name: "4th Year", href: "/resources/4th" },
-    // ],
-  },
+  { label: "Resources", href: "/resources" },
   {
     label: "Book shelf",
     subItems: [
@@ -30,7 +21,7 @@ const mobileNavItems = [
       { name: "English", href: "/books/english" },
     ],
   },
-  { label: "Code Library", href: "/code" },
+  { label: "Code Library", href: "/codelibrary" },
   { label: "Global Ruet", href: "/alumni" },
   { label: "Informations", href: "/info" },
   {
@@ -86,9 +77,14 @@ export function MobileNavbarLinks() {
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+              duration: 0.5,
+            }}
             ref={navRef}
-            className="fixed top-0 left-0 w-full h-full bg-white dark:bg-[#071a26] z-40 p-6 overflow-y-auto"
+            className="fixed top-0 right-0 w-full h-full bg-white dark:bg-[#071a26] z-40 p-6 overflow-y-auto"
           >
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">

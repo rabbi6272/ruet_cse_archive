@@ -45,38 +45,11 @@ function DesktopNavbarLinks() {
         {/* <!-- Nav Item 1 --> */}
         <div className="nav-item relative">
           <Link
-            href={"/resources"}
+            href="/resources"
             className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-3.5 py-2.5 rounded-md text-sm font-medium transition-all duration-500 flex items-center"
           >
             Resources
-            {/* <i className="fas fa-chevron-down ml-1 text-xs"></i> */}
           </Link>
-          {/* <div className="dropdown morphic-effect absolute left-0 mt-3 w-40 rounded-md shadow-lg bg-white dark:bg-[#071a26] z-50">
-            <Link
-              href="/resources/1st"
-              className="block w-full px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
-            >
-              1<sup>st</sup> year
-            </Link>
-            <Link
-              href="/resources/2nd"
-              className="block w-full px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
-            >
-              2<sup>nd</sup> Year
-            </Link>
-            <Link
-              href="/resources/3rd"
-              className="block w-full px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
-            >
-              3<sup>rd</sup> Year
-            </Link>
-            <Link
-              href="/resources/4th"
-              className="block w-full px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
-            >
-              4<sup>th</sup> Year
-            </Link>
-          </div> */}
         </div>
 
         {/* <!-- Nav Item 2 --> */}
@@ -133,16 +106,22 @@ function DesktopNavbarLinks() {
 
         {/* <!-- Nav Item 3 --> */}
         <div className="nav-item relative">
-          <Link href="/alumni" className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-3.5 py-2.5 rounded-md text-sm font-medium 5 flex items-center">
+          <Link
+            href="/codelibrary"
+            className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-3.5 py-2.5 rounded-md text-sm font-medium 5 flex items-center"
+          >
             Code Library
           </Link>
         </div>
 
         {/* <!-- Nav Item 4 --> */}
         <div className="nav-item relative">
-          <button className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-3.5 py-2.5 rounded-md text-sm font-medium 5 flex items-center">
+          <Link
+            href="/alumni"
+            className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-3.5 py-2.5 rounded-md text-sm font-medium 5 flex items-center"
+          >
             Global Ruet
-          </button>
+          </Link>
         </div>
 
         {/* <!-- Nav Item 5 --> */}

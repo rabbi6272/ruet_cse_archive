@@ -23,9 +23,9 @@ export function CardGrid() {
       <br />
       <br />
 
-      <div className="grid grid-cols-1 mx-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
         {/* Card 1 */}
-        <div className="md:max-w-[350px] max-w-[300px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-900 rounded-lg shadow-md ">
+        <div className="mx-auto md:max-w-[350px] max-w-[270px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-900 rounded-lg shadow-md ">
           <Image className="rounded-t-lg" src={image0} alt="image0" />
           <div className="p-5">
             <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">
@@ -59,7 +59,7 @@ export function CardGrid() {
         </div>
 
         {/* Card 2 */}
-        <div className="md:max-w-[350px] max-w-[300px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-800 rounded-lg shadow-md ">
+        <div className="mx-auto md:max-w-[350px] max-w-[270px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-800 rounded-lg shadow-md ">
           <Image className="rounded-t-lg" src={image1} alt="image0" />
           <div className="p-5">
             <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">
@@ -91,7 +91,7 @@ export function CardGrid() {
         </div>
 
         {/* Card 3 */}
-        <div className="md:max-w-[350px] max-w-[300px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-800 rounded-lg shadow-md ">
+        <div className="mx-auto md:max-w-[350px] max-w-[270px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-800 rounded-lg shadow-md ">
           <Image className="rounded-t-lg" src={image2} alt="image0" />
           <div className="p-5">
             <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">
@@ -123,7 +123,7 @@ export function CardGrid() {
         </div>
 
         {/* Card 4 */}
-        <div className="md:max-w-[350px] max-w-[300px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-800 rounded-lg shadow-md ">
+        <div className="mx-auto md:max-w-[350px] max-w-[270px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-800 rounded-lg shadow-md ">
           <Image className="rounded-t-lg" src={image3} alt="image0" />
           <div className="p-5">
             <h5 className="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-gray-200">
@@ -155,7 +155,7 @@ export function CardGrid() {
         </div>
 
         {/* Card 5 */}
-        <div className="max-w-[300px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-800 rounded-lg shadow-md ">
+        <div className="mx-auto md:max-w-[350px] max-w-[270px] bg-white dark:bg-[#071a26] border border-gray-200 dark:border-gray-800 rounded-lg shadow-md ">
           <Link href="#">
             <img className="rounded-t-lg" src="/images/image4.jpg" alt="" />
           </Link>
