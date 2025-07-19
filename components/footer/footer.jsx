@@ -1,8 +1,9 @@
 "use client";
 import localFont from "next/font/local";
 import Image from "next/image";
-
+import { Inter } from "next/font/google";
 import Link from "next/link";
+const inter = Inter({ subsets: ["latin"] });
 
 const myFont = localFont({
   src: "../tt_trailer.ttf",
@@ -12,7 +13,7 @@ export function FooterComponent() {
   return (
     <footer
       data-testid="flowbite-footer"
-      className="morphic-effect bg-morphic-light bg-[#ffffffe6] dark:bg-[#071a26] rounded-t-lg shadow-sm md:flex md:items-center md:justify-between w-full p-6 lg:px-14 lg:py-6"
+      className={`${inter.variable} morphic-effect bg-morphic-light bg-[#ffffffe6] dark:bg-[#071a26] rounded-t-lg shadow-sm md:flex md:items-center md:justify-between w-full p-6 lg:px-14 lg:py-6`}
     >
       <div className="w-full">
         <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">

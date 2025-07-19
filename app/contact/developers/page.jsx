@@ -1,14 +1,14 @@
 import { ProfileCard } from "@/components/developers/profileCard";
 
-import rabbi1 from "@/public/images/developers/rabbi1.jpg";
-import bitto from "@/public/images/developers/bitto.jpg";
+import rabbi2 from "@/public/images/developers/rabbi2.jpg";
+import bitto2 from "@/public/images/developers/bitto2.jpg";
 
 const developers = [
   {
     name: "Md. Fazle Rabbi",
     role: "Developer",
     location: "Khulna, Bangladesh",
-    image: rabbi1,
+    image: rabbi2,
     github: "https://github.com/rabbi6272",
     linkedin: "https://www.linkedin.com/in/fazle-rabbi-b48a722a2/",
     facebook: "https://www.facebook.com/frabbi6272",
@@ -16,7 +16,7 @@ const developers = [
   {
     name: "Bitto Saha",
     role: "Developer",
-    image: bitto,
+    image: bitto2,
     location: "Bogra, Bangladesh",
     github: "https://github.com/idcnys/",
     linkedin: "https://www.linkedin.com/in/bittosaha/",

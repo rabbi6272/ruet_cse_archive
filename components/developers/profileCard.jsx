@@ -1,6 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { Nunito } from "next/font/google";
+
+const nunito = Nunito({
+  variable: "--font-nunito",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+});
+
 export function ProfileCard({
   name,
   role,
@@ -19,7 +27,7 @@ export function ProfileCard({
             <Image src={image} alt={name} />
           </div>
           <div class="front__text">
-            <h3 class="front__text-header">{name}</h3>
+            <h3 class={`${nunito.className} front__text-header`}>{name}</h3>
             <p class="front__text-para">
               <i class="fas fa-map-marker-alt front-icons"></i>
               {location}
