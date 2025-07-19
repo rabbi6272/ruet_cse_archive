@@ -32,7 +32,7 @@ const mobileNavItems = [
       { name: "Facebook Page", href: "/contact/fb1" },
       // { name: "Facebook Page 2", href: "/contact/fb2" },
       // { name: "Facebook Page 3", href: "/contact/fb3" },
-      { name: "About Developers", href: "/contact/about" },
+      { name: "About Developers", href: "/contact/developers" },
       { name: "Why this?", href: "/contact/why" },
     ],
   },
