@@ -7,6 +7,11 @@
   --morphic-light: #ffffffe6;
 }
 
+/* In your globals.css or a custom CSS file */
+.dark .hljs {
+  background-color: #111827 !important; /* Corresponds to Tailwind's gray-900 */
+}
+
 body {
   margin: 0;
   padding: 0;
