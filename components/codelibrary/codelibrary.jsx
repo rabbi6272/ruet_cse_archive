@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 
-const CodeLibrary = () => {
+export function CodeLibrary() {
   const [snippets, setSnippets] = useState([
     {
       id: 1,
@@ -93,8 +93,6 @@ int main(){
     },
   ]);
 
-  const [darkMode, setDarkMode] = useState(false);
-
   const copyCode = (code) => {
     navigator.clipboard.writeText(code);
   };
@@ -111,10 +109,6 @@ int main(){
           : snippet
       )
     );
-  };
-
-  const toggleDarkMode = () => {
-    setDarkMode(!darkMode);
   };
 
   return (
@@ -159,9 +153,9 @@ int main(){
                 <i className="fas fa-search"></i>
               </button>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-4">
               <select
-                className={`px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 bg-white border-gray-300 text-gray-500
+                className={`flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 bg-white border-gray-300 text-gray-500
                 `}
               >
                 <option value="">All Languages</option>
@@ -170,7 +164,7 @@ int main(){
                 <option value="javascript">JavaScript</option>
               </select>
               <select
-                className={`px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 bg-white border-gray-300 text-gray-500
+                className={`flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 bg-white border-gray-300 text-gray-500
                 `}
               >
                 <option value="">All Authors</option>
@@ -304,7 +298,7 @@ int main(){
             </a>
             <a
               href="#"
-              className={`px-3 py-2 rounded-l-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700
+              className={`px-3 py-2 rounded-r-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700
                   bg-white border-gray-300 text-gray-500 hover:bg-gray-50`}
             >
               Next
@@ -314,6 +308,4 @@ int main(){
       </div>
     </div>
   );
-};
-
-export default CodeLibrary;
+}

@@ -1,4 +1,4 @@
-import { CardGrid } from "@/components/resources/CardGrid";
+import { ResourcesCardGrid } from "@/components/resources/resouecesCardGrid";
 
 export default function Resources() {
   return (
@@ -6,7 +6,7 @@ export default function Resources() {
       {/*Card Grid*/}
       <br />
       <br />
-      <CardGrid />
+      <ResourcesCardGrid />
       <br />
       <br />
     </div>

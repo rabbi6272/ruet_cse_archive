@@ -31,7 +31,7 @@ export function Slideshow() {
         className="w-full mx-auto h-full "
       >
         {slides.map((src, index) => (
-          <SplideSlide key={index} className="h-full w-full pb-8  ">
+          <SplideSlide key={index} className="h-full w-full pb-8">
             <img
               src={src}
               alt={`Slide ${index + 1}`}

@@ -20,12 +20,12 @@ export function Navbar() {
     <nav
       className={`${inter.variable} bg-[#ffffff] dark:bg-[#071a26] navbar morphic-effect sticky top-0 w-full z-50 shadow-md`}
     >
-      <div className="w-full mx-auto px-3 lg:px-10 flex items-center justify-between h-16">
-        {/* <!-- Logo --> */}
+      <div className="w-full mx-auto px-3 lg:px-10 flex items-center justify-between h-[70px]">
+        {/* <!-- Logo  --> */}
         <div className="flex-shrink-0 flex items-center">
           <Link href="/" className="flex items-center">
-            {/* <i className="fas fa-cube text-gray-800 text-2xl"></i> */}
             <Image src={"/images/logo.png"} alt="logo" width={80} height={80} />
+            {/* <i className="fas fa-cube text-gray-800 text-2xl"></i> */}
             {/* <span className={`${myFont.className} ml-2 text-3xl text-gray-800`}>
               CSE Archive
             </span> */}
@@ -41,7 +41,7 @@ export function Navbar() {
 function DesktopNavbarLinks() {
   return (
     <div className={`${inter.variable} desktop-menu hidden lg:block`}>
-      <div className="flex items-baseline space-x-2 text-gray-700 dark:text-gray-200 ">
+      <div className="flex items-baseline space-x-6 text-gray-700 dark:text-gray-200 ">
         {/* <!-- Nav Item 1 --> */}
         <div className="nav-item relative">
           <Link
@@ -130,7 +130,7 @@ function DesktopNavbarLinks() {
             Contact & Help
             <i className="fas fa-chevron-down ml-1 text-xs"></i>
           </button>
-          <div className="dropdown morphic-effect absolute left-0 mt-3 w-48 rounded-md shadow-lg bg-white dark:bg-[#071a26] z-50">
+          <div className="dropdown morphic-effect absolute left-0 mt-3 w-44 rounded-md shadow-lg bg-white dark:bg-[#071a26] z-50">
             <Link
               href="#"
               className="block px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
@@ -147,20 +147,9 @@ function DesktopNavbarLinks() {
               href="#"
               className="block px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
             >
-              Facebook Page 1
+              Facebook Page
             </Link>
-            <Link
-              href="#"
-              className="block px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
-            >
-              Facebook Page 2
-            </Link>
-            <Link
-              href="#"
-              className="block px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
-            >
-              Facebook Page 3
-            </Link>
+
             <Link
               href="#"
               className="block px-4 py-2 rounded text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-800 hover:text-indigo-600"
@@ -176,13 +165,12 @@ function DesktopNavbarLinks() {
           </div>
         </div>
 
-        {/* <!-- Nav Item 6 --> */}
-        <div className="nav-item relative">
+        {/* <div className="nav-item relative">
           <button className="text-gray-700 dark:text-gray-200 hover:text-indigo-600 hover:bg-gray-200 dark:hover:bg-gray-800 px-3.5 py-2.5 rounded-md text-sm font-medium 5 flex items-center">
             Informations
-            {/* <!-- <i className="fas fa-chevron-down ml-1 text-xs"></i> --> */}
+            <i className="fas fa-chevron-down ml-1 text-xs"></i> 
           </button>
-        </div>
+        </div>  */}
       </div>
     </div>
   );

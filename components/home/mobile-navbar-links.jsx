@@ -23,15 +23,15 @@ const mobileNavItems = [
   },
   { label: "Code Library", href: "/codelibrary" },
   { label: "Global Ruet", href: "/alumni" },
-  { label: "Informations", href: "/info" },
+  // { label: "Informations", href: "/info" },
   {
     label: "Contact & Help",
     subItems: [
       { name: "Email", href: "/contact/email" },
       { name: "Official Website", href: "/contact/website" },
-      { name: "Facebook Page 1", href: "/contact/fb1" },
-      { name: "Facebook Page 2", href: "/contact/fb2" },
-      { name: "Facebook Page 3", href: "/contact/fb3" },
+      { name: "Facebook Page", href: "/contact/fb1" },
+      // { name: "Facebook Page 2", href: "/contact/fb2" },
+      // { name: "Facebook Page 3", href: "/contact/fb3" },
       { name: "About Developers", href: "/contact/about" },
       { name: "Why this?", href: "/contact/why" },
     ],
@@ -84,7 +84,7 @@ export function MobileNavbarLinks() {
               duration: 0.5,
             }}
             ref={navRef}
-            className="fixed top-0 right-0 w-full h-full bg-white dark:bg-[#071a26] z-40 p-6 overflow-y-auto"
+            className="fixed top-0 right-0 w-full h-full bg-white dark:bg-[#071a26] z-999999999 p-6 overflow-y-auto"
           >
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">

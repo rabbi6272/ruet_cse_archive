@@ -1,9 +1,5 @@
-import Leafletmap from "@/components/alumni/leafletmap";
+import { Leafletmap } from "@/components/alumni/leafletmap.jsx";
 
 export default function Alumni() {
-  return (
-    <>
-      <Leafletmap />
-    </>
-  );
+  return <Leafletmap />;
 }

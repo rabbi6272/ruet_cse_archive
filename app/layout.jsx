@@ -1,7 +1,7 @@
 import { Lato } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/home-page/navbar";
-import { Footer, FooterComponent } from "@/components/footer/footer";
+import { Navbar } from "@/components/home/navbar";
+import { FooterComponent } from "@/components/footer/footer";
 
 const lato = Lato({
   variable: "--font-lato",
