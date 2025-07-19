@@ -106,14 +106,23 @@ const CodeLibrary = () => {
 
   // Highlight code blocks
   useEffect(() => {
+    // We request two animation frames to ensure the DOM is fully updated
+    // after React renders, before highlight.js tries to access the elements.
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         document.querySelectorAll("pre code").forEach((block) => {
+          // --- FIX APPLIED HERE ---
+          // Remove the data-highlighted attribute to force re-highlighting
+          // when a snippet's visibility (due to expansion) changes.
+          if (block.hasAttribute('data-highlighted')) {
+            block.removeAttribute('data-highlighted');
+          }
+          // --- END FIX ---
           hljs.highlightElement(block);
         });
       });
     });
-  }, [filteredSnippets, expandedSnippets]);
+  }, [filteredSnippets, expandedSnippets]); // Re-run when snippets change or expand/collapse state changes
 
   const indexOfLastSnippet = currentPage * snippetsPerPage;
   const indexOfFirstSnippet = indexOfLastSnippet - snippetsPerPage;
@@ -210,6 +219,7 @@ const CodeLibrary = () => {
                 Browse and share useful code snippets
               </p>
             </div>
+            {/* Dark mode toggle button - uncomment to re-enable */}
             {/* <button
               onClick={toggleDarkMode}
               className="px-4 py-2 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 bg-gray-200 hover:bg-gray-300"
@@ -247,6 +257,7 @@ const CodeLibrary = () => {
                   </option>
                 ))}
               </select>
+              {/* Author filter - uncomment to re-enable */}
               {/* <select
                 value={authorFilter}
                 onChange={(e) => setAuthorFilter(e.target.value)}
@@ -288,7 +299,7 @@ const CodeLibrary = () => {
                   <div className="code-container dark:bg-gray-900 bg-gray-200 mt-4 rounded-lg overflow-hidden relative group">
                     {/* Copy button */}
                     <button
-                      className="copy-btn px-2 py-1 rounded text-xs absolute top-2 right-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white bg-gray-700 hover:bg-gray-600 text-white"
+                      className="copy-btn px-2 py-1 rounded text-xs absolute top-2 right-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-900 dark:hover:bg-gray-800 dark:text-white bg-gray-900 hover:bg-gray-800 text-white"
                       onClick={() => copyCode(snippet.id, snippet.codeSnippet)}
                     >
                       <i className="far fa-copy mr-1"></i> Copy
