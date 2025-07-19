@@ -1,122 +1,186 @@
 "use client";
-import React, { useState } from "react";
+import { useState, useEffect, useRef } from 'react';
+import { db } from '@/lib/firebase';
+import { ref, onValue, off, update } from 'firebase/database';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/monokai.css';
 
-export function CodeLibrary() {
-  const [snippets, setSnippets] = useState([
-    {
-      id: 1,
-      language: "C",
-      title: "How to print Hello World",
-      description: "This is how we start our coding journey :)",
-      code: `#include <stdio.h>
+const CodeLibrary = () => {
+  const [snippets, setSnippets] = useState([]);
+  const [filteredSnippets, setFilteredSnippets] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [languageFilter, setLanguageFilter] = useState('');
+  const [authorFilter, setAuthorFilter] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [darkMode, setDarkMode] = useState(true);
+  const [expandedSnippets, setExpandedSnippets] = useState({});
+  const [animateLike, setAnimateLike] = useState({});
+  const [animateCopy, setAnimateCopy] = useState({});
+  const snippetsPerPage = 5;
+  const maxCodeLines = 10;
 
-int main(){
+  const needsHighlightRef = useRef(false);
 
-      printf("Hello , World!");
-      return 0;
-      
-}`,
-      author: "Bitto Saha",
-      likes: 24,
-      isLiked: false,
-      date: "July 18, 2025",
-    },
-    {
-      id: 2,
-      language: "C",
-      title: "Module_6 Problem 1",
-      description: "How pointers work?",
-      code: `#include <stdio.h>
-
-int main()
-{
-
-    int a = 10;
-    int *p;
-    p = &a;
-    printf("a=%d &a=%X p=%X *p=%d", a, &a, p, *p);
-    printf("%x", &a);
-    // my assumptions => a=10 &a=location p=location *p=10;
-    // output a=10 &a=61FF18 p=61FF18 *p=10
-    // corrected
-
-    return 0;
-
-}`,
-      author: "Fazle Rabbi",
-      likes: 18,
-      isLiked: false,
-      date: "July 18, 2025",
-    },
-    {
-      id: 3,
-      language: "C",
-      title: "Prime Numbers",
-      description: "This code checks for prime numbers.",
-      code: `#include<stdio.h>
-int check(int a){
-    //1 -> true
-    // 0 -> false
-    if(a<2) return 0;
-    //else 1 or 0 return false
-    if(a<4) return 1;
-    //means 2 or 3 return true
-
-    for(int i=2;i<a;i++){
-        //checking all numbers from 2-a
-        if(a%i==0) return 0;
-        //means a is divisible by something not a and 1 
+  // Date formatting function
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) {
+      return 'Unknown Date';
     }
-    return 1;
-    //it is a prime for sure
-}
-
-int main(){
-    int num;
-    printf("N.B: Negative number to exit/n");
-    while(1){
-        printf("Enter a number: ");
-        scanf("%d",&num);
-        if(num<0) break;
-        if(check(num))
-            printf("%d is Prime./n",num);
-        else
-            printf("%d is not Prime./n",num);
-    }
-
-    return 0;
-}`,
-      author: "Mirajul Islam",
-      likes: 32,
-      isLiked: false,
-      date: "July 18, 2025",
-    },
-  ]);
-
-  const copyCode = (code) => {
-    navigator.clipboard.writeText(code);
+    const day = date.getDate();
+    const month = date.toLocaleString('en-US', { month: 'long' });
+    const year = date.getFullYear();
+    return `${day} ${month}, ${year}`;
   };
 
-  const toggleLike = (id) => {
+  // Fetch snippets from Firebase
+  useEffect(() => {
+    const snippetsRef = ref(db, 'codeSnippets');
+    const fetchData = onValue(
+      snippetsRef,
+      (snapshot) => {
+        try {
+          const data = snapshot.val();
+          if (data) {
+            const snippetsArray = Object.keys(data)
+              .map((key) => ({
+                id: key,
+                ...data[key],
+                isLiked: localStorage.getItem(`liked_${key}`) === 'true',
+                likesCount: data[key].likesCount || 0,
+                copiesCount: data[key].copiesCount || 0,
+                language: data[key].language?.toLowerCase() === 'js' ? 'javascript' : data[key].language?.toLowerCase(),
+              }))
+              .sort((a, b) => new Date(b.date) - new Date(a.date));
+            setSnippets(snippetsArray);
+          } else {
+            setSnippets([]);
+          }
+        } catch (error) {
+          console.error('Error fetching snippets:', error);
+          setSnippets([]);
+        }
+      },
+      (error) => {
+        console.error('Firebase error:', error);
+        setSnippets([]);
+      }
+    );
+    return () => off(snippetsRef, 'value', fetchData);
+  }, []);
+
+  // Filter snippets
+  useEffect(() => {
+    let result = snippets;
+    if (searchTerm) {
+      result = result.filter(
+        (snippet) =>
+          snippet.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          snippet.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          snippet.codeSnippet?.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    if (languageFilter) {
+      result = result.filter(
+        (snippet) => snippet.language?.toLowerCase() === languageFilter.toLowerCase()
+      );
+    }
+    if (authorFilter) {
+      result = result.filter(
+        (snippet) => snippet.author?.toLowerCase() === authorFilter.toLowerCase()
+      );
+    }
+    setFilteredSnippets(result);
+    if (currentPage > Math.ceil(result.length / snippetsPerPage)) {
+      setCurrentPage(1);
+    }
+  }, [searchTerm, languageFilter, authorFilter, snippets, currentPage]);
+
+  // Highlight code blocks
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        document.querySelectorAll('pre code').forEach((block) => {
+          hljs.highlightElement(block);
+        });
+      });
+    });
+  }, [filteredSnippets, expandedSnippets]);
+
+  const indexOfLastSnippet = currentPage * snippetsPerPage;
+  const indexOfFirstSnippet = indexOfLastSnippet - snippetsPerPage;
+  const currentSnippets = filteredSnippets.slice(indexOfFirstSnippet, indexOfLastSnippet);
+  const totalPages = Math.ceil(filteredSnippets.length / snippetsPerPage);
+
+  const copyCode = async (id, code) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setAnimateCopy((prev) => ({ ...prev, [id]: true }));
+      setTimeout(() => setAnimateCopy((prev) => ({ ...prev, [id]: false })), 500);
+      setSnippets((prevSnippets) =>
+        prevSnippets.map((snippet) =>
+          snippet.id === id
+            ? { ...snippet, copiesCount: (snippet.copiesCount || 0) + 1 }
+            : snippet
+        )
+      );
+      const snippetRef = ref(db, `codeSnippets/${id}`);
+      await update(snippetRef, {
+        copiesCount: (snippets.find((s) => s.id === id).copiesCount || 0) + 1,
+      });
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  };
+
+  const toggleLike = async (id) => {
+    const snippet = snippets.find((s) => s.id === id);
+    if (snippet.isLiked) return;
+
+    const newIsLiked = true;
+    setAnimateLike((prev) => ({ ...prev, [id]: true }));
+    setTimeout(() => setAnimateLike((prev) => ({ ...prev, [id]: false })), 500);
+
     setSnippets((prevSnippets) =>
       prevSnippets.map((snippet) =>
         snippet.id === id
           ? {
               ...snippet,
-              likes: snippet.isLiked ? snippet.likes - 1 : snippet.likes + 1,
-              isLiked: !snippet.isLiked,
+              likesCount: (snippet.likesCount || 0) + 1,
+              isLiked: newIsLiked,
             }
           : snippet
       )
     );
+
+    localStorage.setItem(`liked_${id}`, 'true');
+
+    const snippetRef = ref(db, `codeSnippets/${id}`);
+    await update(snippetRef, {
+      likesCount: (snippet.likesCount || 0) + 1,
+    });
+  };
+
+  const toggleExpand = (id) => {
+    setExpandedSnippets((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const isCodeLong = (code) => {
+    return code?.split('\n').length > maxCodeLines;
   };
 
   return (
-    <div
-      className={`min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:text-gray-100bg-gray-50 text-gray-800`}
-    >
+    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark' : ''}`}>
       <div className="container mx-auto px-4 py-8 max-w-4xl">
-        {/* Header Section */}
         <div className="mb-8">
           <div className="flex justify-between items-start">
             <div>
@@ -129,183 +193,190 @@ int main(){
             </div>
             {/* <button
               onClick={toggleDarkMode}
-              className="px-4 py-2 rounded-lg 
-                  dark:bg-gray-700 dark:hover:bg-gray-600
-                  bg-gray-200 hover:bg-gray-300"
+              className="px-4 py-2 rounded-lg dark:bg-gray-700 dark:hover:bg-gray-600 bg-gray-200 hover:bg-gray-300"
             >
               {darkMode ? "☀️ Light Mode" : "🌙 Dark Mode"}
             </button> */}
           </div>
 
-          {/* Search and Filter Section */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex-1 relative">
               <input
                 type="text"
                 placeholder="Search snippets..."
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 
-                    dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border-gray-300 text-gray-700
-                "
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border-gray-300 text-gray-700"
               />
               <button
-                className={`absolute right-3 top-2 dark:text-gray-400 dark:hover:text-gray-300 text-gray-400 hover:text-gray-500`}
+                className="absolute right-3 top-2 dark:text-gray-400 dark:hover:text-gray-300 text-gray-400 hover:text-gray-500"
               >
                 <i className="fas fa-search"></i>
               </button>
             </div>
             <div className="flex gap-4">
               <select
-                className={`flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 bg-white border-gray-300 text-gray-500
-                `}
+                value={languageFilter}
+                onChange={(e) => setLanguageFilter(e.target.value)}
+                className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 bg-white border-gray-300 text-gray-500"
               >
                 <option value="">All Languages</option>
-                <option value="cpp">C++</option>
-                <option value="python">Python</option>
-                <option value="javascript">JavaScript</option>
+                {Array.from(new Set(snippets.map((s) => s.language).filter(Boolean))).map((lang) => (
+                  <option key={lang} value={lang}>{lang}</option>
+                ))}
               </select>
-              <select
-                className={`flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 bg-white border-gray-300 text-gray-500
-                `}
+              {/* <select
+                value={authorFilter}
+                onChange={(e) => setAuthorFilter(e.target.value)}
+                className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 bg-white border-gray-300 text-gray-500"
               >
                 <option value="">All Authors</option>
-                <option value="bitto">Bitto Saha</option>
-                <option value="other">Others</option>
-              </select>
+                {Array.from(new Set(snippets.map((s) => s.author).filter(Boolean))).map((author) => (
+                  <option key={author} value={author}>{author}</option>
+                ))}
+              </select> */}
             </div>
           </div>
         </div>
 
-        {/* Code Cards */}
         <div className="space-y-6">
-          {snippets.map((snippet) => (
-            <div
-              key={snippet.id}
-              className={`rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 
-                dark:bg-gray-800 border dark:border-gray-700 bg-white border-gray-300
-              `}
-            >
-              <div className="p-5">
-                <div className="flex justify-between items-start">
-                  <span
-                    className={`inline-block text-xs px-2 py-1 rounded-full font-semibold uppercase dark:bg-blue-900 dark:text-blue-300
-                        bg-blue-100 text-blue-800`}
-                  >
-                    {snippet.language}
-                  </span>
-                  <span
-                    className={`text-xs  dark:text-gray-400 text-gray-500
-                    `}
-                  >
-                    {snippet.date}
-                  </span>
-                </div>
-
-                <h3
-                  className={`mt-2 text-lg font-semibold dark:text-gray-100 text-gray-800
-                  `}
-                >
-                  {snippet.title}
-                </h3>
-                <p
-                  className={`mt-1 dark:text-gray-400 text-gray-600
-                  `}
-                >
-                  {snippet.description}
-                </p>
-
-                <div className="code-container mt-4 rounded-lg overflow-hidden relative group">
-                  <button
-                    className={`copy-btn px-2 py-1 rounded text-xs absolute top-2 right-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white
-                        bg-gray-700 hover:bg-gray-600 text-white
-                    `}
-                    onClick={() => copyCode(snippet.code)}
-                  >
-                    <i className="far fa-copy mr-1"></i> Copy
-                  </button>
-                  <pre
-                    className={`p-4 overflow-x-auto
-                      dark:bg-gray-900 bg-gray-100
-                    `}
-                  >
-                    <code
-                      className={`block font-mono text-sm font-medium dark:text-gray-300 text-gray-800
-                      `}
+          {currentSnippets.length > 0 ? (
+            currentSnippets.map((snippet) => (
+              <div
+                key={snippet.id}
+                className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-gray-800 border dark:border-gray-700 bg-white border-gray-300"
+              >
+                <div className="p-5">
+                  <div className="flex justify-between items-start">
+                    <span
+                      className="inline-block text-xs px-2 py-1 rounded-full font-semibold uppercase dark:bg-blue-900 dark:text-blue-300 bg-blue-100 text-blue-800"
                     >
-                      {snippet.code}
-                    </code>
-                  </pre>
-                </div>
-
-                <div className="mt-4 flex justify-between items-center text-sm">
-                  <span className="font-medium dark:text-gray-400 text-gray-500">
-                    {snippet.author}
-                  </span>
-                  <div className="flex items-center">
-                    <button
-                      className={`mr-2 ${
-                        snippet.isLiked
-                          ? "text-red-500"
-                          : "dark:text-gray-400 text-gray-500"
-                      } hover:text-red-500`}
-                      onClick={() => toggleLike(snippet.id)}
-                    >
-                      <i
-                        className={`${
-                          snippet.isLiked ? "fas" : "far"
-                        } fa-heart`}
-                      ></i>
-                    </button>
-                    <span className="dark:text-gray-400 text-gray-600">
-                      {snippet.likes} {snippet.likes === 1 ? "Like" : "Likes"}
+                      {snippet.language}
                     </span>
+                    <span className="text-xs dark:text-gray-400 text-gray-500">
+                      {formatDate(snippet.date)}
+                    </span>
+                  </div>
+
+                  <h3 className="mt-2 text-lg font-semibold dark:text-gray-100 text-gray-800">
+                    {snippet.title}
+                  </h3>
+                  <p className="mt-1 dark:text-gray-400 text-gray-600">
+                    {snippet.description}
+                  </p>
+
+                  <div className="code-container mt-4 rounded-lg overflow-hidden relative group">
+                    <button
+                      className="copy-btn px-2 py-1 rounded text-xs absolute top-2 right-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white bg-gray-700 hover:bg-gray-600 text-white"
+                      onClick={() => copyCode(snippet.id, snippet.codeSnippet)}
+                    >
+                      <i className="far fa-copy mr-1"></i> Copy
+                    </button>
+                    <pre className={`p-4 overflow-x-auto ${isCodeLong(snippet.codeSnippet) && !expandedSnippets[snippet.id] ? 'max-h-40' : ''}`}>
+                      <code className={`language-${snippet.language?.toLowerCase() || 'text'}`}>
+                        {isCodeLong(snippet.codeSnippet) && !expandedSnippets[snippet.id]
+                          ? snippet.codeSnippet.split('\n').slice(0, maxCodeLines).join('\n') + '\n...'
+                          : snippet.codeSnippet
+                        }
+                      </code>
+                    </pre>
+                    {isCodeLong(snippet.codeSnippet) && (
+                      <button
+                        className="w-full px-4 py-2 text-sm dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-300 bg-gray-200 hover:bg-gray-300 text-gray-600"
+                        onClick={() => toggleExpand(snippet.id)}
+                      >
+                        {expandedSnippets[snippet.id] ? 'Collapse' : 'Expand'} Code
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="mt-4 flex justify-between items-center text-sm">
+                    <span className="font-medium dark:text-gray-400 text-gray-500">
+                      {snippet.rollNumber}
+                    </span>
+                    <div className="flex items-center space-x-2">
+                      <button
+                        className={`mr-2 ${snippet.isLiked ? 'text-red-500' : 'dark:text-gray-400 text-gray-500'} hover:text-red-500 ${animateLike[snippet.id] ? 'animate-bounce' : ''}`}
+                        onClick={() => toggleLike(snippet.id)}
+                      >
+                        <i className={`${snippet.isLiked ? 'fas' : 'far'} fa-heart`}></i>
+                      </button>
+                      <span className={`dark:text-gray-400 text-gray-600 ${animateLike[snippet.id] ? 'animate-bounce' : ''}`}>
+                        {snippet.likesCount || 0} Likes
+                      </span>
+                      <span className={`dark:text-gray-400 text-gray-600 ${animateCopy[snippet.id] ? 'animate-bounce' : ''}`}>
+                        {snippet.copiesCount || 0} Copies
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
+            ))
+          ) : (
+            <div className="text-center py-10 dark:text-gray-400 text-gray-600">
+              No snippets found matching your criteria
             </div>
-          ))}
+          )}
         </div>
 
-        {/* Pagination */}
-        <div className="flex justify-center mt-8">
-          <nav className="inline-flex rounded-md shadow">
-            <a
-              href="#"
-              className={`px-3 py-2 rounded-l-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700
-                  bg-white border-gray-300 text-gray-500 hover:bg-gray-50`}
-            >
-              Previous
-            </a>
-            <a
-              href="#"
-              className={`px-3 py-2 border-t border-b dark:bg-gray-800 dark:border-gray-700 dark:text-blue-400 dark:hover:bg-gray-700
-                  bg-white border-gray-300 text-blue-600 hover:bg-gray-50`}
-            >
-              1
-            </a>
-            <a
-              href="#"
-              className={`px-3 py-2 border-t border-b dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700
-                  bg-white border-gray-300 text-gray-500 hover:bg-gray-50`}
-            >
-              2
-            </a>
-            <a
-              href="#"
-              className={`px-3 py-2 border-t border-b dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700
-                  bg-white border-gray-300 text-gray-500 hover:bg-gray-50`}
-            >
-              3
-            </a>
-            <a
-              href="#"
-              className={`px-3 py-2 rounded-r-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700
-                  bg-white border-gray-300 text-gray-500 hover:bg-gray-50`}
-            >
-              Next
-            </a>
-          </nav>
-        </div>
+        {filteredSnippets.length > snippetsPerPage && (
+          <div className="flex justify-center mt-8">
+            <nav className="inline-flex rounded-md shadow">
+              <button
+                onClick={() => paginate(Math.max(1, currentPage - 1))}
+                disabled={currentPage === 1}
+                className={`px-3 py-2 rounded-l-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 bg-white border-gray-300 text-gray-500 hover:bg-gray-50 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                Previous
+              </button>
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
+                <button
+                  key={number}
+                  onClick={() => paginate(number)}
+                  className={`px-3 py-2 border-t border-b dark:bg-gray-800 dark:border-gray-700 ${currentPage === number ? 'dark:text-blue-400' : 'dark:text-gray-300 dark:hover:bg-gray-700'} bg-white border-gray-300 ${currentPage === number ? 'text-blue-600' : 'text-gray-500 hover:bg-gray-50'}`}
+                >
+                  {number}
+                </button>
+              ))}
+              <button
+                onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
+                disabled={currentPage === totalPages}
+                className={`px-3 py-2 rounded-r-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 bg-white border-gray-300 text-gray-500 hover:bg-gray-50 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+              >
+                Next
+              </button>
+            </nav>
+          </div>
+        )}
       </div>
+
+      <style jsx global>{`
+        .animate-pulse {
+          animation: pulse 0.5s ease-in-out;
+        }
+        .animate-bounce {
+          animation: bounce 0.5s ease-in-out;
+        }
+        @keyframes pulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.2); }
+          100% { transform: scale(1); }
+        }
+        @keyframes bounce {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-5px); }
+          100% { transform: translateY(0); }
+        }
+        pre {
+          margin: 0;
+          background: none !important;
+        }
+        code {
+          background: none !important;
+        }
+      `}</style>
     </div>
   );
-}
+};
+
+export default CodeLibrary;
