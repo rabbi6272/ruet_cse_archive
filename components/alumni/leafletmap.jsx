@@ -116,7 +116,7 @@ export function Leafletmap() {
   };
 
   return (
-    <div className="bg-gray-100 ">
+    <div>
       <MapContainer
         center={[20, 0]}
         zoom={2}

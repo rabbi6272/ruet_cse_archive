@@ -1,23 +1,24 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
-import { db } from '@/lib/firebase';
-import { ref, onValue, off, update } from 'firebase/database';
-import hljs from 'highlight.js';
-import 'highlight.js/styles/monokai.css';
+import { useState, useEffect, useRef } from "react";
+import { db } from "@/lib/firebase";
+import { ref, onValue, off, update } from "firebase/database";
+
+import hljs from "highlight.js";
+import "highlight.js/styles/monokai.css";
 
 const CodeLibrary = () => {
   const [snippets, setSnippets] = useState([]);
   const [filteredSnippets, setFilteredSnippets] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [languageFilter, setLanguageFilter] = useState('');
-  const [authorFilter, setAuthorFilter] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [languageFilter, setLanguageFilter] = useState("");
+  const [authorFilter, setAuthorFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [darkMode, setDarkMode] = useState(true);
   const [expandedSnippets, setExpandedSnippets] = useState({});
   const [animateLike, setAnimateLike] = useState({});
   const [animateCopy, setAnimateCopy] = useState({});
   const snippetsPerPage = 5;
-  const maxCodeLines = 10;
+  const maxCodeLines = 20;
 
   const needsHighlightRef = useRef(false);
 
@@ -25,17 +26,17 @@ const CodeLibrary = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     if (isNaN(date.getTime())) {
-      return 'Unknown Date';
+      return "Unknown Date";
     }
     const day = date.getDate();
-    const month = date.toLocaleString('en-US', { month: 'long' });
+    const month = date.toLocaleString("en-US", { month: "long" });
     const year = date.getFullYear();
     return `${day} ${month}, ${year}`;
   };
 
   // Fetch snippets from Firebase
   useEffect(() => {
-    const snippetsRef = ref(db, 'codeSnippets');
+    const snippetsRef = ref(db, "codeSnippets");
     const fetchData = onValue(
       snippetsRef,
       (snapshot) => {
@@ -46,10 +47,13 @@ const CodeLibrary = () => {
               .map((key) => ({
                 id: key,
                 ...data[key],
-                isLiked: localStorage.getItem(`liked_${key}`) === 'true',
+                isLiked: localStorage.getItem(`liked_${key}`) === "true",
                 likesCount: data[key].likesCount || 0,
                 copiesCount: data[key].copiesCount || 0,
-                language: data[key].language?.toLowerCase() === 'js' ? 'javascript' : data[key].language?.toLowerCase(),
+                language:
+                  data[key].language?.toLowerCase() === "js"
+                    ? "javascript"
+                    : data[key].language?.toLowerCase(),
               }))
               .sort((a, b) => new Date(b.date) - new Date(a.date));
             setSnippets(snippetsArray);
@@ -57,16 +61,16 @@ const CodeLibrary = () => {
             setSnippets([]);
           }
         } catch (error) {
-          console.error('Error fetching snippets:', error);
+          console.error("Error fetching snippets:", error);
           setSnippets([]);
         }
       },
       (error) => {
-        console.error('Firebase error:', error);
+        console.error("Firebase error:", error);
         setSnippets([]);
       }
     );
-    return () => off(snippetsRef, 'value', fetchData);
+    return () => off(snippetsRef, "value", fetchData);
   }, []);
 
   // Filter snippets
@@ -76,18 +80,22 @@ const CodeLibrary = () => {
       result = result.filter(
         (snippet) =>
           snippet.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          snippet.description?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          snippet.description
+            ?.toLowerCase()
+            .includes(searchTerm.toLowerCase()) ||
           snippet.codeSnippet?.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     if (languageFilter) {
       result = result.filter(
-        (snippet) => snippet.language?.toLowerCase() === languageFilter.toLowerCase()
+        (snippet) =>
+          snippet.language?.toLowerCase() === languageFilter.toLowerCase()
       );
     }
     if (authorFilter) {
       result = result.filter(
-        (snippet) => snippet.author?.toLowerCase() === authorFilter.toLowerCase()
+        (snippet) =>
+          snippet.author?.toLowerCase() === authorFilter.toLowerCase()
       );
     }
     setFilteredSnippets(result);
@@ -100,7 +108,7 @@ const CodeLibrary = () => {
   useEffect(() => {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        document.querySelectorAll('pre code').forEach((block) => {
+        document.querySelectorAll("pre code").forEach((block) => {
           hljs.highlightElement(block);
         });
       });
@@ -109,14 +117,20 @@ const CodeLibrary = () => {
 
   const indexOfLastSnippet = currentPage * snippetsPerPage;
   const indexOfFirstSnippet = indexOfLastSnippet - snippetsPerPage;
-  const currentSnippets = filteredSnippets.slice(indexOfFirstSnippet, indexOfLastSnippet);
+  const currentSnippets = filteredSnippets.slice(
+    indexOfFirstSnippet,
+    indexOfLastSnippet
+  );
   const totalPages = Math.ceil(filteredSnippets.length / snippetsPerPage);
 
   const copyCode = async (id, code) => {
     try {
       await navigator.clipboard.writeText(code);
       setAnimateCopy((prev) => ({ ...prev, [id]: true }));
-      setTimeout(() => setAnimateCopy((prev) => ({ ...prev, [id]: false })), 500);
+      setTimeout(
+        () => setAnimateCopy((prev) => ({ ...prev, [id]: false })),
+        500
+      );
       setSnippets((prevSnippets) =>
         prevSnippets.map((snippet) =>
           snippet.id === id
@@ -129,7 +143,7 @@ const CodeLibrary = () => {
         copiesCount: (snippets.find((s) => s.id === id).copiesCount || 0) + 1,
       });
     } catch (err) {
-      console.error('Failed to copy:', err);
+      console.error("Failed to copy:", err);
     }
   };
 
@@ -153,7 +167,7 @@ const CodeLibrary = () => {
       )
     );
 
-    localStorage.setItem(`liked_${id}`, 'true');
+    localStorage.setItem(`liked_${id}`, "true");
 
     const snippetRef = ref(db, `codeSnippets/${id}`);
     await update(snippetRef, {
@@ -175,13 +189,18 @@ const CodeLibrary = () => {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const isCodeLong = (code) => {
-    return code?.split('\n').length > maxCodeLines;
+    return code?.split("\n").length > maxCodeLines;
   };
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark' : ''}`}>
+    <div
+      className={`min-h-screen transition-colors duration-300 ${
+        darkMode ? "dark" : ""
+      }`}
+    >
       <div className="container mx-auto px-4 py-8 max-w-4xl">
         <div className="mb-8">
+          {/* Title and description */}
           <div className="flex justify-between items-start">
             <div>
               <h1 className="text-3xl dark:text-gray-300 text-gray-700 font-bold mb-2">
@@ -199,6 +218,7 @@ const CodeLibrary = () => {
             </button> */}
           </div>
 
+          {/* Search and filters */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
             <div className="flex-1 relative">
               <input
@@ -208,9 +228,7 @@ const CodeLibrary = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-white border-gray-300 text-gray-700"
               />
-              <button
-                className="absolute right-3 top-2 dark:text-gray-400 dark:hover:text-gray-300 text-gray-400 hover:text-gray-500"
-              >
+              <button className="absolute right-3 top-2 dark:text-gray-400 dark:hover:text-gray-300 text-gray-400 hover:text-gray-500">
                 <i className="fas fa-search"></i>
               </button>
             </div>
@@ -221,8 +239,12 @@ const CodeLibrary = () => {
                 className="flex-1 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 bg-white border-gray-300 text-gray-500"
               >
                 <option value="">All Languages</option>
-                {Array.from(new Set(snippets.map((s) => s.language).filter(Boolean))).map((lang) => (
-                  <option key={lang} value={lang}>{lang}</option>
+                {Array.from(
+                  new Set(snippets.map((s) => s.language).filter(Boolean))
+                ).map((lang) => (
+                  <option key={lang} value={lang}>
+                    {lang}
+                  </option>
                 ))}
               </select>
               {/* <select
@@ -244,13 +266,11 @@ const CodeLibrary = () => {
             currentSnippets.map((snippet) => (
               <div
                 key={snippet.id}
-                className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-gray-800 border dark:border-gray-700 bg-white border-gray-300"
+                className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-gray-800 border dark:border-gray-700  bg-white border-gray-300"
               >
                 <div className="p-5">
                   <div className="flex justify-between items-start">
-                    <span
-                      className="inline-block text-xs px-2 py-1 rounded-full font-semibold uppercase dark:bg-blue-900 dark:text-blue-300 bg-blue-100 text-blue-800"
-                    >
+                    <span className="inline-block text-xs px-2 py-1 rounded-full font-semibold uppercase dark:bg-blue-900 dark:text-blue-300 bg-blue-100 text-blue-800">
                       {snippet.language}
                     </span>
                     <span className="text-xs dark:text-gray-400 text-gray-500">
@@ -265,46 +285,89 @@ const CodeLibrary = () => {
                     {snippet.description}
                   </p>
 
-                  <div className="code-container mt-4 rounded-lg overflow-hidden relative group">
+                  <div className="code-container dark:bg-gray-900 bg-gray-200 mt-4 rounded-lg overflow-hidden relative group">
+                    {/* Copy button */}
                     <button
                       className="copy-btn px-2 py-1 rounded text-xs absolute top-2 right-2 opacity-0 transition-opacity duration-300 group-hover:opacity-100 dark:bg-gray-600 dark:hover:bg-gray-500 dark:text-white bg-gray-700 hover:bg-gray-600 text-white"
                       onClick={() => copyCode(snippet.id, snippet.codeSnippet)}
                     >
                       <i className="far fa-copy mr-1"></i> Copy
                     </button>
-                    <pre className={`p-4 overflow-x-auto ${isCodeLong(snippet.codeSnippet) && !expandedSnippets[snippet.id] ? 'max-h-40' : ''}`}>
-                      <code className={`language-${snippet.language?.toLowerCase() || 'text'}`}>
-                        {isCodeLong(snippet.codeSnippet) && !expandedSnippets[snippet.id]
-                          ? snippet.codeSnippet.split('\n').slice(0, maxCodeLines).join('\n') + '\n...'
-                          : snippet.codeSnippet
-                        }
+
+                    {/* Code snippet */}
+                    <pre
+                      className={`p-4 overflow-x-auto ${
+                        isCodeLong(snippet.codeSnippet) &&
+                        !expandedSnippets[snippet.id]
+                          ? "max-h-70"
+                          : ""
+                      }`}
+                    >
+                      <code
+                        className={`language-${
+                          snippet.language?.toLowerCase() || "text"
+                        }`}
+                      >
+                        {isCodeLong(snippet.codeSnippet) &&
+                        !expandedSnippets[snippet.id]
+                          ? snippet.codeSnippet
+                              .split("\n")
+                              .slice(0, maxCodeLines)
+                              .join("\n") + "\n..."
+                          : snippet.codeSnippet}
                       </code>
                     </pre>
+
+                    {/* Code expand button */}
                     {isCodeLong(snippet.codeSnippet) && (
-                      <button
-                        className="w-full px-4 py-2 text-sm dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-300 bg-gray-200 hover:bg-gray-300 text-gray-600"
-                        onClick={() => toggleExpand(snippet.id)}
-                      >
-                        {expandedSnippets[snippet.id] ? 'Collapse' : 'Expand'} Code
-                      </button>
+                      <div className="flex justify-center p-2">
+                        <button
+                          className="px-6 py-2 text-sm font-medium rounded-full mx-auto dark:bg-gray-800 dark:hover:bg-gray-700 dark:text-gray-300 bg-gray-300 hover:bg-gray-400 text-gray-600 transition-colors duration-300"
+                          onClick={() => toggleExpand(snippet.id)}
+                        >
+                          {expandedSnippets[snippet.id]
+                            ? "Collapse "
+                            : "Expand "}
+                          Code
+                        </button>
+                      </div>
                     )}
                   </div>
 
+                  {/* About the author and code description */}
                   <div className="mt-4 flex justify-between items-center text-sm">
                     <span className="font-medium dark:text-gray-400 text-gray-500">
                       {snippet.rollNumber}
                     </span>
                     <div className="flex items-center space-x-2">
                       <button
-                        className={`mr-2 ${snippet.isLiked ? 'text-red-500' : 'dark:text-gray-400 text-gray-500'} hover:text-red-500 ${animateLike[snippet.id] ? 'animate-bounce' : ''}`}
+                        className={`mr-2 ${
+                          snippet.isLiked
+                            ? "text-red-500"
+                            : "dark:text-gray-400 text-gray-500"
+                        } hover:text-red-500 ${
+                          animateLike[snippet.id] ? "animate-bounce" : ""
+                        }`}
                         onClick={() => toggleLike(snippet.id)}
                       >
-                        <i className={`${snippet.isLiked ? 'fas' : 'far'} fa-heart`}></i>
+                        <i
+                          className={`${
+                            snippet.isLiked ? "fas" : "far"
+                          } fa-heart`}
+                        ></i>
                       </button>
-                      <span className={`dark:text-gray-400 text-gray-600 ${animateLike[snippet.id] ? 'animate-bounce' : ''}`}>
+                      <span
+                        className={`dark:text-gray-400 text-gray-600 ${
+                          animateLike[snippet.id] ? "animate-bounce" : ""
+                        }`}
+                      >
                         {snippet.likesCount || 0} Likes
                       </span>
-                      <span className={`dark:text-gray-400 text-gray-600 ${animateCopy[snippet.id] ? 'animate-bounce' : ''}`}>
+                      <span
+                        className={`dark:text-gray-400 text-gray-600 ${
+                          animateCopy[snippet.id] ? "animate-bounce" : ""
+                        }`}
+                      >
                         {snippet.copiesCount || 0} Copies
                       </span>
                     </div>
@@ -325,23 +388,39 @@ const CodeLibrary = () => {
               <button
                 onClick={() => paginate(Math.max(1, currentPage - 1))}
                 disabled={currentPage === 1}
-                className={`px-3 py-2 rounded-l-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 bg-white border-gray-300 text-gray-500 hover:bg-gray-50 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`px-3 py-2 rounded-l-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 bg-white border-gray-300 text-gray-500 hover:bg-gray-50 ${
+                  currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               >
                 Previous
               </button>
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
-                <button
-                  key={number}
-                  onClick={() => paginate(number)}
-                  className={`px-3 py-2 border-t border-b dark:bg-gray-800 dark:border-gray-700 ${currentPage === number ? 'dark:text-blue-400' : 'dark:text-gray-300 dark:hover:bg-gray-700'} bg-white border-gray-300 ${currentPage === number ? 'text-blue-600' : 'text-gray-500 hover:bg-gray-50'}`}
-                >
-                  {number}
-                </button>
-              ))}
+              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                (number) => (
+                  <button
+                    key={number}
+                    onClick={() => paginate(number)}
+                    className={`px-3 py-2 border-t border-b dark:bg-gray-800 dark:border-gray-700 ${
+                      currentPage === number
+                        ? "dark:text-blue-400"
+                        : "dark:text-gray-300 dark:hover:bg-gray-700"
+                    } bg-white border-gray-300 ${
+                      currentPage === number
+                        ? "text-blue-600"
+                        : "text-gray-500 hover:bg-gray-50"
+                    }`}
+                  >
+                    {number}
+                  </button>
+                )
+              )}
               <button
                 onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
                 disabled={currentPage === totalPages}
-                className={`px-3 py-2 rounded-r-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 bg-white border-gray-300 text-gray-500 hover:bg-gray-50 ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`px-3 py-2 rounded-r-md border dark:bg-gray-800 dark:border-gray-700 dark:text-gray-300 dark:hover:bg-gray-700 bg-white border-gray-300 text-gray-500 hover:bg-gray-50 ${
+                  currentPage === totalPages
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
+                }`}
               >
                 Next
               </button>
@@ -349,32 +428,6 @@ const CodeLibrary = () => {
           </div>
         )}
       </div>
-
-      <style jsx global>{`
-        .animate-pulse {
-          animation: pulse 0.5s ease-in-out;
-        }
-        .animate-bounce {
-          animation: bounce 0.5s ease-in-out;
-        }
-        @keyframes pulse {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.2); }
-          100% { transform: scale(1); }
-        }
-        @keyframes bounce {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-5px); }
-          100% { transform: translateY(0); }
-        }
-        pre {
-          margin: 0;
-          background: none !important;
-        }
-        code {
-          background: none !important;
-        }
-      `}</style>
     </div>
   );
 };

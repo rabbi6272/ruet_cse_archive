@@ -39,6 +39,44 @@ body {
   font-family: Inter, sans-serif;
 }
 
+/* Codelibrary section */
+.animate-pulse {
+  animation: pulse 0.5s ease-in-out;
+}
+.animate-bounce {
+  animation: bounce 0.5s ease-in-out;
+}
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+pre {
+  margin: 0;
+  background: none !important;
+}
+code {
+  background: none !important;
+}
+
 /* Alumni map style */
 #map {
   height: 100vh;
