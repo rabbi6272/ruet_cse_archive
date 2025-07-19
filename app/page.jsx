@@ -15,6 +15,8 @@ export default function Home() {
       <Slideshow />
       <br />
       <br />
+      {/*Features List*/}
+      <FeaturesList />
     </div>
   );
 }
