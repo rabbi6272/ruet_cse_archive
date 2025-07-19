@@ -1,6 +1,7 @@
 export function FeaturesList() {
   return (
     <>
+      <div className="container">
       <div className="max-w-2xl mx-auto text-center">
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
           Here we share study materials and essential resources provided by our humble seniors, along with guidelines for future studies and job sectors.
@@ -110,6 +111,7 @@ export function FeaturesList() {
       </div>
       <br />
       <br />
+        </div>
     </>
   );
 }
