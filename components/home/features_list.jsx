@@ -6,7 +6,7 @@ export function FeaturesList() {
           We invest in the <span className="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">world's potential</span>
         </h1> */}
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Here we share study materials and essential resources provided by our humble seniors.  And guidlines for our future studies and job sectors.
+          Here we share study materials and essential resources provided by our humble seniors.  And guidelines for our future studies and job sectors.
         </p>
         <br />
 
@@ -47,16 +47,15 @@ export function FeaturesList() {
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
             <div className="p-5">
               <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                What is Flowbite?
+                How this site will be beneficial?
               </h3>
               <div className="text-gray-500 dark:text-gray-400 space-y-2">
                 <p>
-                  Flowbite is an open-source library of interactive components built on top of Tailwind CSS including buttons, dropdowns, modals, navbars, and more.
-                </p>
+                  We all know that searching for a specific PDF file or YouTube video on the web can be frustrating and often disrupts our momentum and curiosity for learning. Here, we aim to gather everything you need to study in one place.
                 <p>
-                  Check out this guide to learn how to{" "}
-                  <a href="/docs/getting-started/introduction/" className="text-blue-600 dark:text-blue-500 hover:underline">
-                    get started
+                  Also you can search additional books in the Book Shelf as well.{" "}
+                  <a href="/shelf" className="text-blue-600 dark:text-blue-500 hover:underline">
+                    Book Shelf
                   </a>{" "}
                   and start developing websites even faster with components on top of Tailwind CSS.
                 </p>
@@ -68,18 +67,18 @@ export function FeaturesList() {
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
             <div className="p-5">
               <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                Is there a Figma file available?
+                How Code Library will benefit you?
               </h3>
               <div className="text-gray-500 dark:text-gray-400 space-y-2">
                 <p>
-                  Flowbite is first conceptualized and designed using the Figma software so everything you see in the library has a design equivalent in our Figma file.
-                </p>
+                  This will boost the curiosity to learn something new and inspire the creativity to make something unique that stands out from the crowd.
+                   </p>
                 <p>
                   Check out the{" "}
-                  <a href="https://flowbite.com/figma/" className="text-blue-600 dark:text-blue-500 hover:underline">
-                    Figma design system
+                  <a href="/codelibrary" className="text-blue-600 dark:text-blue-500 hover:underline">
+                     Code Library
                   </a>{" "}
-                  based on the utility classes from Tailwind CSS and components from Flowbite.
+                  Where learners debug..
                 </p>
               </div>
             </div>
@@ -89,17 +88,12 @@ export function FeaturesList() {
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden border border-gray-200 dark:border-gray-700">
             <div className="p-5">
               <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                What are the differences between Flowbite and Tailwind UI?
+               Do you want to suggest any feature? or ask something? 
               </h3>
               <div className="text-gray-500 dark:text-gray-400 space-y-2">
+                
                 <p>
-                  The main difference is that the core components from Flowbite are open source under the MIT license, whereas Tailwind UI is a paid product.
-                </p>
-                <p>
-                  Flowbite relies on smaller, standalone components, whereas Tailwind UI offers large UI sections.
-                </p>
-                <p>
-                  You can even use Flowbite, Flowbite Pro, and Tailwind UI together for best results.
+                  Feel free to contact with us.
                 </p>
                 {/* <ul className="ps-5 list-disc">
                   <li>
