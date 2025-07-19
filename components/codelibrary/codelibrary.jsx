@@ -75,54 +75,53 @@ const CodeLibrary = () => {
 
   // Filter snippets
   useEffect(() => {
-    let result = snippets;
-    if (searchTerm) {
-      result = result.filter(
-        (snippet) =>
-          snippet.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          snippet.description
-            ?.toLowerCase()
-            .includes(searchTerm.toLowerCase()) ||
-          snippet.codeSnippet?.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-    if (languageFilter) {
-      result = result.filter(
-        (snippet) =>
-          snippet.language?.toLowerCase() === languageFilter.toLowerCase()
-      );
-    }
-    if (authorFilter) {
-      result = result.filter(
-        (snippet) =>
-          snippet.author?.toLowerCase() === authorFilter.toLowerCase()
-      );
-    }
-    setFilteredSnippets(result);
-    if (currentPage > Math.ceil(result.length / snippetsPerPage)) {
-      setCurrentPage(1);
-    }
-  }, [searchTerm, languageFilter, authorFilter, snippets, currentPage]);
-
+  let result = snippets;
+  if (searchTerm) {
+    result = result.filter((snippet) =>
+      (snippet.title?.toLowerCase().includes(searchTerm.toLowerCase()) || "") ||
+      (snippet.description?.toLowerCase().includes(searchTerm.toLowerCase()) || "")
+    );
+  }
+  if (languageFilter) {
+    result = result.filter(
+      (snippet) =>
+        snippet.language?.toLowerCase() === languageFilter.toLowerCase()
+    );
+  }
+  if (authorFilter) {
+    result = result.filter(
+      (snippet) =>
+        snippet.author?.toLowerCase() === authorFilter.toLowerCase()
+    );
+  }
+  setFilteredSnippets(result);
+  if (currentPage > Math.ceil(result.length / snippetsPerPage)) {
+    setCurrentPage(1);
+  }
+}, [searchTerm, languageFilter, authorFilter, snippets, currentPage]);
   // Highlight code blocks
   useEffect(() => {
-    // We request two animation frames to ensure the DOM is fully updated
-    // after React renders, before highlight.js tries to access the elements.
-    requestAnimationFrame(() => {
-      requestAnimationFrame(() => {
+    needsHighlightRef.current = true; // Flag to indicate highlighting is needed
+    const highlight = () => {
+      if (needsHighlightRef.current) {
         document.querySelectorAll("pre code").forEach((block) => {
-          // --- FIX APPLIED HERE ---
-          // Remove the data-highlighted attribute to force re-highlighting
-          // when a snippet's visibility (due to expansion) changes.
-          if (block.hasAttribute('data-highlighted')) {
-            block.removeAttribute('data-highlighted');
+          if (block.hasAttribute("data-highlighted")) {
+            block.removeAttribute("data-highlighted");
           }
-          // --- END FIX ---
           hljs.highlightElement(block);
         });
+        needsHighlightRef.current = false;
+      }
+    };
+
+    const timeout = setTimeout(() => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(highlight);
       });
-    });
-  }, [filteredSnippets, expandedSnippets]); // Re-run when snippets change or expand/collapse state changes
+    }, 100); // Slight delay for DOM stability
+
+    return () => clearTimeout(timeout);
+  }, [filteredSnippets, expandedSnippets, currentPage]); // Added currentPage to dependencies
 
   const indexOfLastSnippet = currentPage * snippetsPerPage;
   const indexOfFirstSnippet = indexOfLastSnippet - snippetsPerPage;
@@ -277,7 +276,7 @@ const CodeLibrary = () => {
             currentSnippets.map((snippet) => (
               <div
                 key={snippet.id}
-                className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-gray-800 border dark:border-gray-700  bg-white border-gray-300"
+                className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 dark:bg-gray-800 border dark:border-gray-700 bg-white border-gray-300"
               >
                 <div className="p-5">
                   <div className="flex justify-between items-start">
@@ -376,7 +375,7 @@ const CodeLibrary = () => {
                       </span>
                       <span
                         className={`dark:text-gray-400 text-gray-600 ${
-                          animateCopy[snippet.id] ? "animate-bounce" : ""
+                          animateCopy[snippet.id] ? " animate-bounce" : ""
                         }`}
                       >
                         {snippet.copiesCount || 0} Copies
