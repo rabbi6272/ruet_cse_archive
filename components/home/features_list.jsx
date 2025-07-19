@@ -2,21 +2,21 @@ export function FeaturesList() {
   return (
     <>
       <div className="max-w-2xl mx-auto text-center">
-        <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-dark">
+{/*         <h1 className="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-dark">
           We invest in the <span className="underline underline-offset-3 decoration-8 decoration-blue-400 dark:decoration-blue-600">world's potential</span>
-        </h1>
+        </h1> */}
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
+          Here we share study materials and essential resources provided by our humble seniors.  And guidlines for our future studies and job sectors.
         </p>
         <br />
 
         <ul className="space-y-4 text-left text-gray-500 dark:text-gray-400">
           {[
-            'Individual configuration',
-            'No setup, or hidden fees',
-            'Team size: <span class="font-semibold text-gray-900 dark:text-white">1 developer</span>',
-            'Premium support: <span class="font-semibold text-gray-900 dark:text-white">6 months</span>',
-            'Free updates: <span class="font-semibold text-gray-900 dark:text-white">6 months</span>',
+            'Access every materials from one place',
+            'Code Library to share your creativity',
+            'Available PDF files: <span class="font-semibold text-gray-900 dark:text-white">10+</span>',
+            'Code snippets: <span class="font-semibold text-gray-900 dark:text-white">10+</span>',
+            'Alumni: <span class="font-semibold text-gray-900 dark:text-white">100+</span>',
           ].map((text, index) => (
             <li key={index} className="flex items-center space-x-3 rtl:space-x-reverse">
               <svg className="shrink-0 w-3.5 h-3.5 text-green-500 dark:text-green-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12">
@@ -34,13 +34,12 @@ export function FeaturesList() {
       <div className="max-w-2xl mx-auto text-center">
         <h1 className="mb-4 text-3xl font-extrabold text-gray-900 dark:text-dark md:text-5xl lg:text-6xl">
           <span className="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">
-            Better Data
+            But Why?
           </span>{" "}
-          Scalable AI.
+{/*           Scalable AI. */}
         </h1>
         <p className="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-          Here at Flowbite we focus on markets where technology, innovation, and capital can unlock long-term value and drive economic growth.
-        </p>
+         Let's answer some FAQ.</p>
         <br />
 
         <div className="space-y-4 max-w-2xl mx-auto">
