@@ -215,8 +215,7 @@ const CodeLibrary = () => {
                 Code Snippets Gallery
               </h1>
               <p className="mb-6 dark:text-gray-400 text-gray-600">
-                Browse and share useful code snippets
-              </p>
+               Browse and share useful code snippets. We do not showcase any kind of AI-generated content here. Feel free to use any code you like, but please give credit to the original author. Happy coding!</p>
             </div>
             {/* Dark mode toggle button - uncomment to re-enable */}
             {/* <button
