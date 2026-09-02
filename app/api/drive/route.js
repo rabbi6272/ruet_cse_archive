@@ -1,83 +1,40 @@
 import { NextResponse } from "next/server";
-import { unstable_cache } from "next/cache";
-import { google } from "googleapis";
-import fs from "fs";
-import path from "path";
+import { createDriveClient } from "@/lib/drive-auth.js";
+import { getCachedDriveData } from "@/lib/drive-cache.js";
 
-// ============= AUTH CLIENT =============
-async function createAuthClient() {
-  const SCOPES = ["https://www.googleapis.com/auth/drive.readonly"];
+async function fetchDriveData(folderId) {
+  const drive = await createDriveClient();
 
-  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL?.trim();
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(
-    /\\n/g,
-    "\n",
-  ).trim();
+  const [folderInfo, filesResponse] = await Promise.all([
+    drive.files.get({
+      fileId: folderId,
+      fields: "id, name, parents",
+    }),
+    drive.files.list({
+      q: `'${folderId}' in parents and trashed = false`,
+      fields:
+        "files(id, name, mimeType, webViewLink, webContentLink, size, modifiedTime)",
+      pageSize: 1000,
+      orderBy: "name",
+    }),
+  ]);
 
-  let auth;
-
-  if (clientEmail && privateKey) {
-    auth = new google.auth.GoogleAuth({
-      credentials: { client_email: clientEmail, private_key: privateKey },
-      scopes: SCOPES,
-      forceRefreshOnFailure: true,
-    });
-  } else {
-    const KEYFILEPATH = path.join(process.cwd(), "credentials.json");
-    if (!fs.existsSync(KEYFILEPATH)) {
-      throw new Error("Google Drive credentials not found");
-    }
-    auth = new google.auth.GoogleAuth({ keyFile: KEYFILEPATH, scopes: SCOPES });
-  }
-
-  return auth.getClient();
-}
-
-// ============= CACHED DRIVE FETCHER =============
-// unstable_cache persists across requests in Vercel's data cache (not in-memory).
-// revalidate: 600 = 10 minutes, matching your previous CACHE_TTL.
-function getCachedDriveData(folderId) {
-  return unstable_cache(
-    async () => {
-      const authClient = await createAuthClient();
-      const drive = google.drive({ version: "v3", auth: authClient });
-
-      const [folderInfo, filesResponse] = await Promise.all([
-        drive.files.get({
-          fileId: folderId,
-          fields: "id, name, parents",
-        }),
-        drive.files.list({
-          q: `'${folderId}' in parents and trashed = false`,
-          fields:
-            "files(id, name, mimeType, webViewLink, webContentLink, size, modifiedTime)",
-          pageSize: 1000,
-          orderBy: "name",
-        }),
-      ]);
-
-      return {
-        files: filesResponse.data.files || [],
-        parentFolderId: folderInfo.data.parents?.[0] || null,
-        currentFolder: {
-          id: folderInfo.data.id,
-          name: folderInfo.data.name,
-        },
-      };
+  return {
+    files: filesResponse.data.files || [],
+    parentFolderId: folderInfo.data.parents?.[0] || null,
+    currentFolder: {
+      id: folderInfo.data.id,
+      name: folderInfo.data.name,
     },
-    [`drive_${folderId}`], // cache key — unique per folder
-    { revalidate: 2 * 3600 }, // 2 hours, same as your old CACHE_TTL
-  )();
+  };
 }
 
-// ============= MAIN API ROUTE =============
 export async function POST(req) {
-  let folderId, skipCache;
+  let folderId;
 
   try {
     const body = await req.json();
     folderId = body.folderId;
-    skipCache = body.skipCache || false;
   } catch {
     return NextResponse.json(
       { error: "Invalid request body. Expected JSON with folderId field." },
@@ -93,40 +50,11 @@ export async function POST(req) {
   }
 
   try {
-    // If skipCache is requested, bypass unstable_cache by calling Drive directly.
-    // revalidateTag / revalidatePath can also be used for on-demand invalidation.
-    let result;
-    if (skipCache) {
-      const authClient = await createAuthClient();
-      const drive = google.drive({ version: "v3", auth: authClient });
+    const data = await getCachedDriveData(folderId, () => fetchDriveData(folderId));
 
-      const [folderInfo, filesResponse] = await Promise.all([
-        drive.files.get({ fileId: folderId, fields: "id, name, parents" }),
-        drive.files.list({
-          q: `'${folderId}' in parents and trashed = false`,
-          fields:
-            "files(id, name, mimeType, webViewLink, webContentLink, size, modifiedTime)",
-          pageSize: 1000,
-          orderBy: "name",
-        }),
-      ]);
-
-      result = {
-        files: filesResponse.data.files || [],
-        parentFolderId: folderInfo.data.parents?.[0] || null,
-        currentFolder: {
-          id: folderInfo.data.id,
-          name: folderInfo.data.name,
-        },
-      };
-    } else {
-      result = await getCachedDriveData(folderId);
-    }
-
-    return NextResponse.json(result, {
+    return NextResponse.json(data, {
       headers: {
         "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
-        "X-Cache-Status": skipCache ? "SKIP" : "HIT_OR_MISS",
       },
     });
   } catch (err) {
@@ -167,4 +95,29 @@ export async function POST(req) {
       },
     );
   }
+}
+
+export async function GET() {
+  const { getWatchInfo, getPageToken } = await import("@/lib/drive-meta.js");
+
+  const [watchInfo, pageToken] = await Promise.all([
+    getWatchInfo(),
+    getPageToken(),
+  ]);
+
+  return NextResponse.json({
+    storage: "next-cache (unstable_cache) + firebase-rtdb (drive/meta)",
+    watch: watchInfo
+      ? {
+          channelId: watchInfo.channelId,
+          expiration: watchInfo.expiration
+            ? new Date(Number(watchInfo.expiration)).toISOString()
+            : null,
+          expired: watchInfo.expiration
+            ? Date.now() > Number(watchInfo.expiration)
+            : true,
+        }
+      : null,
+    pageToken: pageToken ? "present" : "missing",
+  });
 }
