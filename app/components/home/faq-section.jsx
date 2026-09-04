@@ -1,7 +1,5 @@
 import Link from "next/link";
-import { AnimatedCards } from "./animated-cards";
 
-// Server component for static content
 export function FAQSection() {
   const cards = [
     {
@@ -18,7 +16,7 @@ export function FAQSection() {
             Explore the{" "}
             <Link
               href="/shelf"
-              className="text-blue-600 dark:text-blue-500 hover:underline"
+              className="text-blue-600 dark:text-blue-400 hover:underline"
             >
               Book Shelf
             </Link>{" "}
@@ -40,7 +38,7 @@ export function FAQSection() {
             Explore the{" "}
             <Link
               href="/codelibrary"
-              className="text-blue-600 dark:text-blue-500 hover:underline"
+              className="text-blue-600 dark:text-blue-400 hover:underline"
             >
               Code Library
             </Link>{" "}
@@ -63,7 +61,7 @@ export function FAQSection() {
             Discover inspiring stories from{" "}
             <Link
               href="/alumni"
-              className="text-blue-600 dark:text-blue-500 hover:underline"
+              className="text-blue-600 dark:text-blue-400 hover:underline"
             >
               Alumni
             </Link>{" "}
@@ -80,7 +78,7 @@ export function FAQSection() {
           We are a group of{" "}
           <Link
             href="/contact&help/developers"
-            className="text-blue-600 dark:text-blue-500 hover:underline"
+            className="text-blue-600 dark:text-blue-400 hover:underline"
           >
             RUET CSE students
           </Link>{" "}
@@ -90,47 +88,51 @@ export function FAQSection() {
         </p>
       ),
     },
-    // {
-    //   icon: "fa-solid fa-paper-plane",
-    //   title: "Want to suggest a feature or ask something?",
-    //   content: (
-    //     <p>
-    //       Got a feature idea or a question? We're always here to help. Your
-    //       feedback helps us improve, so don't hesitate to reach out anytime!
-    //     </p>
-    //   ),
-    // },
   ];
 
   return (
-    <div className="w-full px-4 mx-auto text-center">
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold">
-        <span className="text-transparent bg-clip-text bg-gradient-to-r to-gray-700 from-gray-500 dark:to-neutral-400 dark:from-neutral-200">
-          Frequently Asked Questions
-        </span>
-      </h1>
-      <p className="text-md font-normal text-gray-500 lg:text-xl dark:text-gray-400">
-        Let's answer some FAQs.
-      </p>
-      <br />
+    <section
+      aria-labelledby="faq-heading"
+      className="w-full px-6 sm:px-8 py-16 sm:py-20"
+    >
+      <div className="max-w-5xl mx-auto">
+        <div className="text-center mb-12">
+          <p className="text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400">
+            Good to know
+          </p>
+          <h2
+            id="faq-heading"
+            className="mt-3 font-[family-name:var(--font-space-grotesk)] text-3xl sm:text-4xl font-bold text-gray-900 dark:text-gray-100 tracking-tight"
+          >
+            Frequently asked questions
+          </h2>
+          <p className="mt-3 text-gray-600 dark:text-gray-400">
+            Let&rsquo;s answer some FAQs.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:px-10 gap-4 mx-auto">
-        {cards.map((card, index) => (
-          <AnimatedCards key={card.title} index={index}>
-            <div className="p-4">
-              <i
-                className={`${card.icon} pb-4 text-5xl text-gray-700 dark:text-gray-300`}
-              ></i>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                {card.title}
-              </h3>
-              <div className="text-gray-500 dark:text-gray-400 space-y-2">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          {cards.map((card, index) => (
+            <div
+              key={card.title}
+              className="reveal group rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-[#071a26] p-7 hover:border-blue-600/50 hover:shadow-lg hover:shadow-blue-600/5 transition-all duration-300"
+              style={{ "--reveal-delay": `${index * 100}ms` }}
+            >
+              <div className="flex items-center gap-4">
+                <span className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-blue-100 text-blue-600 dark:bg-blue-900/40 dark:text-blue-300 group-hover:bg-blue-600 group-hover:text-white transition-colors duration-300">
+                  <i className={`${card.icon} text-xl`} aria-hidden="true" />
+                </span>
+                <h3 className="font-[family-name:var(--font-space-grotesk)] text-lg font-semibold text-gray-900 dark:text-gray-100">
+                  {card.title}
+                </h3>
+              </div>
+              <div className="mt-3 text-gray-600 dark:text-gray-400 space-y-2 leading-relaxed">
                 {card.content}
               </div>
             </div>
-          </AnimatedCards>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 }

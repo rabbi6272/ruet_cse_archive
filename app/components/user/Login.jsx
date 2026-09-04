@@ -87,8 +87,8 @@ export function LoginForm() {
 
   return (
     <div className="flex items-center justify-center w-full h-[calc(100vh-70px)] overflow-hidden ">
-      <div className="bg-white/60 dark:bg-[#071a26f1]/60 border border-gray-300 dark:border-gray-700 p-5 lg:p-8 rounded-xl w-[95%] lg:max-w-md">
-        <h2 className="text-3xl font-bold text-center text-gray-700 dark:text-gray-300 tracking-wide mb-3 lg:mb-4">
+      <div className="bg-white dark:bg-[#071a26f1]/60 border border-gray-300 dark:border-gray-700 p-5 lg:p-8 rounded-xl w-[95%] lg:max-w-md shadow-lg">
+        <h2 className="text-3xl font-semibold text-center text-gray-700 dark:text-gray-300 tracking-small mb-3 lg:mb-4">
           Login
         </h2>
 
@@ -96,9 +96,9 @@ export function LoginForm() {
           <div className="mb-4">
             <label
               htmlFor="email"
-              className="pl-4 block text-sm font-medium text-gray-600 dark:text-gray-200"
+              className="pl-2 block text-sm font-medium text-gray-600 dark:text-gray-200"
             >
-              Email
+              Email*
             </label>
             <input
               type="email"
@@ -106,7 +106,7 @@ export function LoginForm() {
               placeholder="student@ruet.ac.bd"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="mt-1 w-full px-3 py-2 border border-gray-300 text-gray-600 dark:text-gray-200 rounded-full shadow focus:outline-none focus:border-blue-500 transition-colors duration-200"
+              className="mt-1 w-full px-3 py-2 border border-gray-300 text-sm text-gray-600 dark:text-gray-200 rounded-full shadow focus:outline-none focus:border-blue-500 transition-colors duration-200"
               required
             />
           </div>
@@ -114,9 +114,9 @@ export function LoginForm() {
           <div className="mb-4">
             <label
               htmlFor="password"
-              className="pl-4 block text-sm font-medium text-gray-600 dark:text-gray-200"
+              className="pl-2 block text-sm font-medium text-gray-600 dark:text-gray-200"
             >
-              Password
+              Password*
             </label>
 
             <div className="relative">
@@ -125,7 +125,7 @@ export function LoginForm() {
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="mt-1 w-full px-3 py-2 border border-gray-300 text-gray-600 dark:text-gray-200 rounded-full shadow focus:outline-none focus:border-blue-500 transition-colors duration-200 relative"
+                className="mt-1 w-full px-3 py-2 border border-gray-300 text-sm text-gray-600 dark:text-gray-200 rounded-full shadow focus:outline-none focus:border-blue-500 transition-colors duration-200 relative"
                 required
               />
 

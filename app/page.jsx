@@ -2,6 +2,8 @@ import { FAQSection } from "@/app/components/home/faq-section";
 import { FeaturesList } from "@/app/components/home/features-list";
 import { HeroImage } from "@/app/components/home/hero-image";
 import { HeroSection } from "@/app/components/home/hero-section";
+import { ApkDownload } from "@/app/components/home/apk-download";
+import { FooterComponent } from "@/app/components/home/footer";
 
 export const metadata = {
   title: "RUET CSE Archive - A Complete Resource Hub for RUET CSE Students",
@@ -56,17 +58,20 @@ export default function Home() {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Image Section */}
+      {/* Campus Image */}
       <HeroImage />
-      <br />
 
-      {/*Features List*/}
+      {/* Features List */}
       <FeaturesList />
-      <br />
+
+      {/* Semicolon APK Download */}
+      <ApkDownload />
 
       {/* FAQ Section */}
       <FAQSection />
-      <br />
+
+      {/* Footer Section */}
+      <FooterComponent />
     </section>
   );
 }

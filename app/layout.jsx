@@ -1,6 +1,5 @@
 import "./globals.css";
 
-import { FooterComponent } from "@/app/components/home/footer";
 import { PageTitleProvider } from "@/app/components/providers/PageTitleProvider";
 import { P2PChatProvider } from "@/app/components/providers/P2PChatProvider";
 import { Providers } from "@/app/components/providers/QueryClientProvider";
@@ -9,7 +8,7 @@ import GlobalPresenceTracker from "@/app/components/providers/GlobalPresenceTrac
 import NoSSR from "@/app/components/ui/NoSSR";
 import FirebaseObfuscationInit from "@/app/components/security/FirebaseObfuscationInit";
 
-import { lato } from "./fonts";
+import { dmSans, spaceGrotesk } from "./fonts";
 import { Toaster } from "react-hot-toast";
 
 import { Analytics } from "@vercel/analytics/next";
@@ -160,7 +159,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body
-        className={`${lato.className} antialiased bg-gray-200 dark:bg-[#071a26f1]`}
+        className={`${dmSans.className} ${spaceGrotesk.variable} antialiased bg-gray-100 dark:bg-[#071a26f1]`}
         suppressHydrationWarning={true}
       >
         <Providers>
@@ -174,7 +173,6 @@ export default function RootLayout({ children }) {
               </NoSSR>
               <GlobalPresenceTracker />
               <MainPage>{children}</MainPage>
-              <FooterComponent />
             </P2PChatProvider>
           </PageTitleProvider>
         </Providers>

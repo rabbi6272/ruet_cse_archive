@@ -242,7 +242,7 @@ export function Dashboard() {
             {/* Left Section - User Info */}
             <div className="flex items-start gap-4 flex-1">
               {/* Avatar */}
-              <div className="flex-shrink-0 shadow-lg">
+              <div className="flex-shrink-0">
                 {user.profilePictureUrl ? (
                   <CldImage
                     width={95}
@@ -250,7 +250,7 @@ export function Dashboard() {
                     src={user.profilePictureUrl}
                     alt={user.roll}
                     loading="eager"
-                    className="h-[95px] w-[95px] rounded-full object-cover"
+                    className="h-[95px] w-[95px] rounded-full object-cover border-2 border-indigo-500 dark:border-indigo-400"
                   />
                 ) : (
                   <span className="h-[95px] w-[95px] rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-xl lg:text-3xl font-bold ">
@@ -374,11 +374,10 @@ export function Dashboard() {
                             </p>
                           </div>
                           <div
-                            className={`text-sm font-bold px-2 py-1 rounded ${
-                              entry.nutrinos >= 0
-                                ? "text-green-600 bg-green-100 dark:bg-green-900/30"
-                                : "text-red-600 bg-red-100 dark:bg-red-900/30"
-                            }`}
+                            className={`text-sm font-bold px-2 py-1 rounded ${entry.nutrinos >= 0
+                              ? "text-green-600 bg-green-100 dark:bg-green-900/30"
+                              : "text-red-600 bg-red-100 dark:bg-red-900/30"
+                              }`}
                           >
                             {entry.nutrinos >= 0 ? "+" : ""}
                             {entry.nutrinos.toFixed(2)}
@@ -564,24 +563,22 @@ export function Dashboard() {
                       <div className="code-container bg-gray-900 rounded-xl overflow-hidden relative group">
                         {/* Code snippet */}
                         <pre
-                          className={`p-4 overflow-x-auto transition-transform duration-500 ${
-                            isCodeLong(snippet.codeSnippet) &&
+                          className={`p-4 overflow-x-auto transition-transform duration-500 ${isCodeLong(snippet.codeSnippet) &&
                             !expandedSnippets[snippet.id]
-                              ? "max-h-90"
-                              : ""
-                          }`}
+                            ? "max-h-90"
+                            : ""
+                            }`}
                         >
                           <code
-                            className={`language-${
-                              snippet.language?.toLowerCase() || "text"
-                            }`}
+                            className={`language-${snippet.language?.toLowerCase() || "text"
+                              }`}
                           >
                             {isCodeLong(snippet.codeSnippet) &&
-                            !expandedSnippets[snippet.id]
+                              !expandedSnippets[snippet.id]
                               ? snippet.codeSnippet
-                                  .split("\n")
-                                  .slice(0, maxCodeLines)
-                                  .join("\n") + "\n..."
+                                .split("\n")
+                                .slice(0, maxCodeLines)
+                                .join("\n") + "\n..."
                               : snippet.codeSnippet}
                           </code>
                         </pre>
@@ -656,11 +653,10 @@ export function Dashboard() {
                       setCurrentPage((prev) => Math.max(prev - 1, 1))
                     }
                     disabled={currentPage === 1}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      currentPage === 1
-                        ? "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                        : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600"
-                    }`}
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${currentPage === 1
+                      ? "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                      : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600"
+                      }`}
                   >
                     <i className="fas fa-chevron-left mr-1"></i>
                     Previous
@@ -670,11 +666,10 @@ export function Dashboard() {
                       setCurrentPage((prev) => Math.min(prev + 1, totalPages))
                     }
                     disabled={currentPage === totalPages}
-                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                      currentPage === totalPages
-                        ? "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
-                        : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600"
-                    }`}
+                    className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${currentPage === totalPages
+                      ? "bg-gray-100 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed"
+                      : "bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600"
+                      }`}
                   >
                     Next
                     <i className="fas fa-chevron-right ml-1"></i>
