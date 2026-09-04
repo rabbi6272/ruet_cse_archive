@@ -1,106 +1,94 @@
-"use client";
-import { motion } from "framer-motion";
+import Link from "next/link";
 
-import { HeroBlurText } from "./hero-blur-text";
+const stats = [
+  { value: "50+", label: "code snippets" },
+  { value: "25+", label: "PDF resources" },
+  { value: "150+", label: "alumni network" },
+];
 
 export function HeroSection() {
   return (
-    <div className="hero-section w-full lg:max-w-4xl px-2 flex flex-col items-center mx-auto my-40 xl:my-34 text-center">
-  <HeroBlurText
-    text="Welcome to RUET CSE Archive!"
-    delay={30}
-    animateBy="letters"
-    direction="bottom"
-    className="text-4xl md:text-5xl lg:text-6xl font-extrabold px-8 sm:px-0 mb-4 text-gray-600 dark:text-neutral-200 drop-shadow-md"
-  />
-
-  <motion.p
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{ duration: 1, delay: 1.5 }}
-    className="text-lg lg:text-xl lg:px-16 font-normal text-gray-500 dark:text-gray-500 mb-10"
-  >
-    A comprehensive resource hub for RUET CSE students, providing access to
-    notes, code libraries, academic materials, alumni network and study
-    materials all in one place.
-  </motion.p>
-
-  {/* Download Button with Edgy Box Shadow */}
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.6, delay: 2 }}
-    className="relative group"
-  >
-    {/* Animated Border with Gradient */}
-    <div className="absolute -inset-[2px] rounded-xl bg-gradient-to-r from-blue-600 via-red-600 to-pink-600 bg-[length:300%_300%] animate-gradient-slow opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-sm"></div>
-    
-    {/* Main Button with Specified Box Shadow - Responsive */}
-<a
-  href="https://github.com/idcnys/semicolon/releases/download/apk_latest/semicolon_2.0.3.apk"
-  download
-  className="relative flex items-center gap-4 px-4 sm:px-8 py-3 sm:py-4 bg-white dark:bg-neutral-900 rounded-xl border-2 border-neutral-200 dark:border-neutral-700 hover:border-transparent transition-all duration-300 w-full sm:w-auto"
-  style={{
-    boxShadow: 'rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset'
-  }}
->
-  {/* App Icon with Gradient */}
-  <div className="flex-shrink-0">
-    <img 
-      src="/images/semicolon.png" 
-      alt="Semicolon Logo"
-      className="w-[40px] sm:w-[50px] rounded-lg object-contain shadow-lg"
-    />
-  </div>
-
-  {/* App Info */}
-  <div className="flex items-center gap-4 flex-wrap sm:flex-nowrap">
-    <div className="text-left">
-      <div className="flex items-center gap-2">
-        <span className="text-sm font-bold text-neutral-800 dark:text-white tracking-tight">
-          Semicolon
-        </span>
-      </div>
-      <div className="flex items-center gap-1.5 mt-0.5 flex-wrap">
-        <span className="text-[10px] text-neutral-500 dark:text-neutral-400 font-medium tracking-wide">
-          Faster
-        </span>
-        <span className="text-[8px] text-neutral-400 dark:text-neutral-600">•</span>
-        <span className="text-[10px] text-neutral-500 dark:text-neutral-400 font-medium tracking-wide">
-          Optimized
-        </span>
-        <span className="text-[8px] text-neutral-400 dark:text-neutral-600">•</span>
-        <span className="text-[10px] text-neutral-500 dark:text-neutral-400 font-medium tracking-wide">
-          In App Experience
-        </span>
-      </div>
-    </div>
-
-    {/* Vertical Divider */}
-    <div className="hidden sm:block w-px h-10 bg-gradient-to-b from-transparent via-neutral-300 dark:via-neutral-700 to-transparent"></div>
-
-    {/* Download Section */}
-    <div className="flex items-center gap-2">
-      <span className="text-xs font-semibold text-neutral-700 dark:text-neutral-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-        Download APK
-      </span>
-      <svg 
-        className="w-5 h-5 text-neutral-600 dark:text-neutral-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 group-hover:translate-y-0.5 transition-all duration-300" 
-        fill="none" 
-        stroke="currentColor" 
-        strokeWidth={2.5}
-        viewBox="0 0 24 24"
+    <section
+      aria-labelledby="hero-heading"
+      className="w-full px-6 sm:px-8 mx-auto max-w-6xl flex flex-col items-center text-center pt-24 sm:pt-32 pb-10"
+    >
+      {/* Eyebrow */}
+      <p
+        className="reveal text-xs sm:text-base font-semibold uppercase tracking-[0.2em] text-blue-600 dark:text-blue-400"
+        style={{ "--reveal-delay": "0ms" }}
       >
-        <path 
-          strokeLinecap="round" 
-          strokeLinejoin="round" 
-          d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" 
-        />
-      </svg>
-    </div>
-  </div>
-</a>
-  </motion.div>
-</div>
+        RUET · Department of Computer Science &amp; Engineering
+      </p>
+
+      {/* Headline */}
+      <h1
+        id="hero-heading"
+        className="reveal mt-4 font-[family-name:var(--font-space-grotesk)] text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-gray-100 tracking-tight"
+        style={{ "--reveal-delay": "200ms" }}
+      >
+        Complete CSE Resources
+      </h1>
+
+      {/* Stats — the hero thesis */}
+      <dl className="mt-10 grid grid-cols-3 gap-6 sm:gap-12 w-full max-w-2xl mx-auto">
+        {stats.map((stat, i) => (
+          <div
+            key={stat.label}
+            className="reveal flex flex-col items-center gap-1"
+            style={{ "--reveal-delay": `${i * 100}ms` }}
+          >
+            <dd className="font-[family-name:var(--font-space-grotesk)] text-3xl md:text-4xl font-bold text-blue-600 dark:text-blue-400 leading-none">
+              {stat.value}
+            </dd>
+            <dt className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium">
+              {stat.label}
+            </dt>
+          </div>
+        ))}
+      </dl>
+
+      {/* Description */}
+      <p
+        className="reveal mt-6 max-w-2xl text-base sm:text-lg text-gray-600 dark:text-gray-400 leading-relaxed"
+        style={{ "--reveal-delay": "300ms" }}
+      >
+        A growing archive of study notes, code libraries and alumni guidance,
+        maintained by RUET CSE students and organized for the students who
+        come after them.
+      </p>
+
+      {/* CTA */}
+      <div
+        className="reveal mt-10 flex flex-col sm:flex-row items-center gap-4"
+        style={{ "--reveal-delay": "400ms" }}
+      >
+        <Link
+          href="/resources"
+          className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-blue-600 text-white text-base font-semibold hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors"
+        >
+          Browse study resources
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2.5}
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+            />
+          </svg>
+        </Link>
+        <Link
+          href="/codelibrary"
+          className="inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full border border-gray-400 dark:border-gray-600 text-gray-900 dark:text-gray-100 text-base font-semibold hover:border-blue-600 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+        >
+          Open the code library
+        </Link>
+      </div>
+    </section>
   );
 }

@@ -228,11 +228,8 @@ export default function DrivePage({ params }) {
       <br />
       <br />
 
-      <div
-        className={`
-          ${lato.className} px-4 md:px-0 md:max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] mx-auto`}
-      >
-        <div className="bg-[#ffffff78] dark:bg-[#071a26] px-3 lg:px-6 xl:px-8 py-8 rounded-lg shadow-md">
+      <div className="px-4 md:px-0 md:max-w-[90%] lg:max-w-[80%] xl:max-w-[70%] mx-auto">
+        <div className={`${lato.className} bg-[#ffffff] dark:bg-[#071a26] px-3 lg:px-6 xl:px-8 py-8 rounded-xl shadow-lg`}>
           <div className="mx-auto">
             {parentFolderId && (
               <div className="mb-2 cursor-pointer">

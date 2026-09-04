@@ -13,6 +13,46 @@
       opacity: 1;
     }
   }
+
+  /* Homepage animations */
+  --animate-fade-in-up: fadeInUp 0.8s ease-out both;
+  --animate-fade-in: fadeIn 0.6s ease-out both;
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+/* Scroll-driven reveal — pure CSS, no JS.
+   Modern browsers animate the element up as it enters the viewport;
+   others fall back to a one-time load fade. */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to { opacity: 1; transform: none; }
+}
+
+@supports (animation-timeline: view()) {
+  .reveal {
+    animation: rise 0.9s cubic-bezier(0.2, 0.6, 0.35, 1) both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 45%;
+  }
+}
+@supports not (animation-timeline: view()) {
+  .reveal {
+    animation: rise 0.9s ease-out both;
+    animation-delay: var(--reveal-delay, 0s);
+  }
 }
 
 ::-webkit-scrollbar-track {
